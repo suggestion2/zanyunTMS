@@ -1,0 +1,490 @@
+<section class="content-header" ng-controller="orderFormCtrl">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a>> <a
+            ng-click="goList(order.status)">线下订单列表</a> > 订单详情</span></div>
+</section>
+<section class="content" ng-controller="orderFormCtrl">
+    <uib-tabset active="activeJustified" justified="true">
+        <uib-tab index="0" heading="订单详情">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-body" style="padding: 50px 0;">
+                            <form class="form-horizontal clearfix" name="form" role="form" novalidate>
+                                <div class="clearfix">
+                                    <div class="form-group col-sm-6">
+                                        <label class="control-label col-xs-3">订单编号</label>
+                                        <div class="col-xs-9">
+                                            <input name="number" type="text" class="form-control" ng-disabled="true"
+                                                   ng-model="order.number"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">货主类型</label>
+                                    <div class="col-xs-9">
+                                        <input name="ownerTypeName" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.ownerTypeName"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">货主手机</label>
+                                    <div class="col-xs-9">
+                                        <input name="ownerPhone" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.ownerPhone"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6" ng-show="order.ownerType == 1">
+                                    <label class="control-label col-xs-3">货主姓名</label>
+                                    <div class="col-xs-9">
+                                        <input name="ownerName" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.ownerName"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6" ng-show="order.ownerType == 1">
+                                    <label class="control-label col-xs-3">货主身份证号</label>
+                                    <div class="col-xs-9">
+                                        <input name="ownerIdCardNum" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.ownerIdCardNum"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6" ng-show="order.ownerType == 2">
+                                    <label class="control-label col-xs-3">货主公司</label>
+                                    <div class="col-xs-9">
+                                        <input name="companyName" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.companyName"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6" ng-show="order.ownerType == 2">
+                                    <label class="control-label col-xs-3">统一信用代码</label>
+                                    <div class="col-xs-9">
+                                        <input name="companyLicenseCode" type="text" class="form-control"
+                                               ng-disabled="true" ng-model="order.companyLicenseCode"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-sm-6" ng-show="order.ownerType == 2">
+                                    <label class="control-label col-xs-3">所在省</label>
+                                    <div class="col-xs-9">
+                                        <input name="companyProvince" type="text" class="form-control"
+                                               ng-disabled="true" ng-model="order.companyProvince"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6" ng-show="order.ownerType == 2">
+                                    <label class="control-label col-xs-3">所在市</label>
+                                    <div class="col-xs-9">
+                                        <input name="companyCity" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.companyCity"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6" ng-show="order.ownerType == 2">
+                                    <label class="control-label col-xs-3">所在区/县</label>
+                                    <div class="col-xs-9">
+                                        <input name="companyCounty" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.companyCounty"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6" ng-show="order.ownerType == 2">
+                                    <label class="control-label col-xs-3">所在地址</label>
+                                    <div class="col-xs-9">
+                                        <input name="companyAddr" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.companyAddr"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6" ng-show="order.status >= 3">
+                                    <label class="control-label col-xs-3">司机姓名</label>
+                                    <div class="col-xs-9">
+                                        <input name="driverName" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.driverName"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6" ng-show="order.status >= 3">
+                                    <label class="control-label col-xs-3">司机手机</label>
+                                    <div class="col-xs-9">
+                                        <input name="driverPhone" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.driverPhone"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">装货联系人</label>
+                                    <div class="col-xs-9">
+                                        <input name="loadContact" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.loadContact"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">联系人手机</label>
+                                    <div class="col-xs-9">
+                                        <input name="loadPhone" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.loadPhone"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">装货时间</label>
+                                    <div class="col-xs-9">
+                                        <input name="loadTime" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.loadTime"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">卸货联系人</label>
+                                    <div class="col-xs-9">
+                                        <input name="dischargeContact" type="text" class="form-control"
+                                               ng-disabled="true" ng-model="order.dischargeContact"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">联系人手机</label>
+                                    <div class="col-xs-9">
+                                        <input name="dischargePhone" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.dischargePhone"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">发货省</label>
+                                    <div class="col-xs-9">
+                                        <input name="oriProvince" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.oriProvince"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">发货市</label>
+                                    <div class="col-xs-9">
+                                        <input name="oriCity" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.oriCity"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">发货区/县</label>
+                                    <div class="col-xs-9">
+                                        <input name="oriCounty" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.oriCounty"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">发货详细地址</label>
+                                    <div class="col-xs-9">
+                                        <input name="oriAddress" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.oriAddress"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">卸货省</label>
+                                    <div class="col-xs-9">
+                                        <input name="arrProvince" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.arrProvince"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">卸货市</label>
+                                    <div class="col-xs-9">
+                                        <input name="arrCity" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.arrCity"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">卸货区/县</label>
+                                    <div class="col-xs-9">
+                                        <input name="arrCounty" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.arrCounty"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">卸货详细地址</label>
+                                    <div class="col-xs-9">
+                                        <input name="arrAddress" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.arrAddress"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">货物类型</label>
+                                    <div class="col-xs-9">
+                                        <input name="cargoType" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.cargoType"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">货物描述</label>
+                                    <div class="col-xs-9">
+                                        <input name="cargoDesc" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.cargoDesc"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">吨数</label>
+                                    <div class="col-xs-9">
+                                        <input name="ton" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.ton"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">立方数</label>
+                                    <div class="col-xs-9">
+                                        <input name="cube" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.cube"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">件数</label>
+                                    <div class="col-xs-9">
+                                        <input name="pieces" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.pieces"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">货值(万元)</label>
+                                    <div class="col-xs-9">
+                                        <input name="cargoValue" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.cargoValue"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">出价(元)</label>
+                                    <div class="col-xs-9">
+                                        <input name="ownerFreight" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.ownerFreight"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">司机运费(元)</label>
+                                    <div class="col-xs-9">
+                                        <input name="driverFreight" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.driverFreight"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">运费结算方式</label>
+                                    <div class="col-xs-9">
+                                        <input name="driverPayType" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.driverPayType"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">信息费(元)</label>
+                                    <div class="col-xs-9">
+                                        <input name="infoFee" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.infoFee"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">创建时间</label>
+                                    <div class="col-xs-9">
+                                        <input name="createTime" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.createTime"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">订单状态</label>
+                                    <div class="col-xs-9">
+                                        <input name="statusName" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.statusName"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3">备注</label>
+                                    <div class="col-xs-9">
+                                        <input name="remarks" type="text" class="form-control" ng-disabled="true"
+                                               ng-model="order.remarks"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label class="control-label col-xs-3" ng-show="order.status == -1">订单审核备注</label>
+                                    <div class="col-xs-9" ng-show="order.status == -1">
+                                        <input name="validateRemarks" type="text" class="form-control"
+                                               ng-disabled="true" ng-model="order.validateRemarks"/>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-top: 30px;">
+                                    <div class="col-xs-12 text-center">
+                                        <button class="btn btn-primary" type="submit" ng-click="showValidateModal();"
+                                                style="margin-right: 10px;"
+                                                ng-show="order.status === 0">审核订单
+                                        </button>
+                                        <button class="btn btn-primary" type="submit" ng-click="showTransportModal();"
+                                                style="margin-right: 10px;"
+                                                ng-show="order.status === 3">订单发货
+                                        </button>
+                                        <button class="btn btn-primary" type="submit" ng-click="complete();"
+                                                style="margin-right: 10px;"
+                                                ng-show="order.status === 4">订单卸货
+                                        </button>
+                                        <button class="btn btn-primary" type="submit" ng-click="showRejectModal();"
+                                                style="margin-right: 10px;"
+                                                ng-show="order.status < 5 && order.status > -1 ">取消订单
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="validateModal" tabindex="-1" role="dialog"  aria-labelledby="validateModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                审核订单
+                            </h4>
+                        </div>
+
+                        <form role="form" name="form1">
+                            <div class="modal-body">
+                                <div class="row" style="margin-top: 10px">
+                                    <label class="col-xs-3 text-right" style="margin-top:6px;">司机运费(元):</label>
+                                    <div class="col-xs-9">
+                                        <attention form-name="form1" name="driverFreight">
+                                            <input type="text" class="form-control" name="driverFreight" ng-required="true" smart-pattern="float"
+                                                   ng-model="validateForm.driverFreight"/>
+                                        </attention>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px">
+                                    <label class="col-xs-3 text-right" style="margin-top:6px;">结算类型:</label>
+                                    <div class="col-xs-9">
+                                        <attention form-name="form1" name="driverPayType">
+                                            <input type="text" class="form-control" name="driverPayType" ng-required="true"
+                                                   ng-model="validateForm.driverPayType"/>
+                                        </attention>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px">
+                                    <label class="col-xs-3 text-right" style="margin-top:6px;">信息费(元):</label>
+                                    <div class="col-xs-9">
+                                        <attention form-name="form1" name="infoFee">
+                                            <input type="text" class="form-control" name="infoFee" ng-required="true" smart-pattern="float"
+                                                   ng-model="validateForm.infoFee"/>
+                                        </attention>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px">
+                                    <label class="col-xs-3 text-right" style="margin-top:6px;">平台实收运费:</label>
+                                    <div class="col-xs-9">
+                                        <attention form-name="form1" name="finalFreight">
+                                            <input type="text" class="form-control" name="finalFreight" ng-required="true" smart-pattern="float"
+                                                   ng-model="validateForm.finalFreight"/>
+                                        </attention>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px">
+                                    <label class="col-xs-3 text-right" style="margin-top:6px;">部门列表</label>
+                                    <ul class="col-xs-9">
+                                        <li ng-repeat="item in vList" class="col-xs-6" style="margin-top: 7px;">
+                                            <label>
+                                                <i class="fa" ng-class="{'fa-check-square-o':checkValid(item.id)==true,'fa-square-o':checkValid(item.id)==false}"></i>
+                                                <input type="checkbox" style="display: none" class="checkbox form-control" ng-click="chooseValid(item.id)"/>
+                                                {{item.name}}
+                                            </label>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer" style="text-align: center;">
+                                <button type="button" class="btn btn-primary" ng-click="validate();" ng-disabled="form1.$invalid">确认</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="transportModal" tabindex="-1" role="dialog"  aria-labelledby="transportModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                发货
+                            </h4>
+                        </div>
+
+                        <form role="form" name="form2">
+                            <div class="modal-body">
+                                <div class="row" style="margin-top: 10px">
+                                    <label class="col-xs-3 text-right" style="margin-top:6px;">部门列表</label>
+                                    <ul class="col-xs-9">
+                                        <li ng-repeat="item in tList" class="col-xs-6" style="margin-top: 7px;">
+                                            <label>
+                                                <i class="fa" ng-class="{'fa-check-square-o':checkTrans(item.id)==true,'fa-square-o':checkTrans(item.id)==false}"></i>
+                                                <input type="checkbox" style="display: none" class="checkbox form-control" ng-click="chooseTrans(item.id)"/>
+                                            </label>
+                                            {{item.name}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer" style="text-align: center;">
+                                <button type="button" class="btn btn-primary" ng-click="transport();" >确认</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModal"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title">
+                                取消订单
+                            </h4>
+                        </div>
+
+                        <form role="form" name="form2">
+                            <div class="modal-body">
+                                <div class="row" style="margin-top: 10px">
+                                    <label class="col-xs-3"
+                                           style="margin-top:6px;">取消原因:</label>
+                                    <div class="col-xs-9">
+                                        <attention form-name="form2" name="validateRemarks">
+                                            <input type="text" class="form-control" name="validateRemarks"
+                                                   ng-required="true"
+                                                   ng-model="rejectForm.validateRemarks"/>
+                                        </attention>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer" style="text-align: center;">
+                                <button type="button" class="btn btn-primary" ng-click="reject();"
+                                        ng-disabled="form2.$invalid">确认
+                                </button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="地图跟踪" ng-click="initMap()">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-body" style="padding: 50px 50px;">
+                            <div id="orderMap" style="height: 400px;width:100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</section>
+

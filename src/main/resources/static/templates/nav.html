@@ -1,0 +1,17 @@
+<!--sidebar nav start-->
+<ul class="nav nav-stacked sidebar-menu" style="padding:30px 0;">
+    <li class="" ng-class="{'active nav-active' : home}">
+        <a href="javascript:;" class="nav-header" ng-click="gotoBackHome()" ><i class="fa fa-window-restore"></i><span>控制台</span></a>
+    </li>
+    <li class="menu-list treeview" ng-repeat="topNav in navList | filter: { parentId: 0 } : true | orderBy : 'displayOrder'" ng-class="{'active nav-active' : topNav.currentItem}" on-finish-render-filters>
+        <a href="javascript:;" class="nav-header" id="{{topNav.id}}" ng-click="selectTopItem(topNav)"><i ng-class="topNav.css"></i><span>{{topNav.name}}</span>
+            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        </a>
+        <ul class="treeview-menu">
+            <li ng-repeat="nav in navList | filter: { parentId: topNav.id } : true | orderBy : 'displayOrder'"  ng-click="selectItem(nav);" ng-class="{'active' : nav.currentItem}">
+                <a href="javascript:;">{{nav.name}}</a>
+            </li>
+        </ul>
+    </li>
+</ul>
+

@@ -1,0 +1,55 @@
+
+<div class="login-box" ng-controller="initPwdCtl">
+    <div class="login-logo">
+        <a href="javascript:;">赵霞智慧物流系统</a>
+    </div>
+    <div class="login-box-body">
+        <!--登录-->
+        <div class="login-panel">
+            <p class="login-box-msg">设置密码</p>
+            <form role="form" name="form" ng-submit="initPwd();" novalidate>
+                <div class="form-group has-feedback">
+                    <input type="password" name="originPwd" class="form-control" placeholder="请输入原始密码" autofocus ng-model="resetPassword.originPwd" onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" name="newPwd" class="form-control" placeholder="请输入新密码" ng-model="resetPassword.newPwd">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">确认重设</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        $('body').removeClass('sticky-header').addClass('login-page');
+        $('html').css({'height':'100%'});
+    });
+</script>
+
+
+<!--<div class="container" ng-controller="initPwdCtl">
+    <form class="form-signin" role="form" name="form" ng-submit="initPwd();" novalidate>
+        <div class="form-signin-heading text-center" style="padding-top: 50px;  ">
+            <h1 class="sign-title">设置密码</h1>
+            <img src="/images/manage_logo.png" width="160" alt=""/>
+        </div>
+        <div class="login-wrap clearfix">
+            <input type="password" name="name" class="form-control" placeholder="请输入原始密码" autofocus ng-model="resetPassword.originPwd" onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;">
+            <input type="password" name="password" class="form-control" placeholder="请输入新密码" ng-model="resetPassword.newPwd">
+            <button class="btn btn-lg btn-login btn-block" type="submit"><i class="fa fa-check"></i></button>
+        </div>
+    </form>
+</div>-->
+
+<!--<script>-->
+    <!--$(function(){-->
+        <!--$('body').removeClass('sticky-header').addClass('login-body');-->
+    <!--});-->
+<!--</script>-->

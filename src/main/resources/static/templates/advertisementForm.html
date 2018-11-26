@@ -1,0 +1,73 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > <a href="/background#/index/advertisement/list">广告位管理</a> > 编辑广告位</span></div>
+</section>
+<section class="content" ng-controller="advertisementFormCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-body" style="padding-top: 50px;padding-bottom: 50px;">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label" style="width: 200px;">广告位名称</label>
+
+                            <div class="col-sm-10" style="width: 500px;">
+                                <attention form-name="form" name="name">
+                                    <input name="name" id="name" type="text" ng-disabled="true" class="form-control"
+                                           ng-model="advertisement.name" ng-required="true"/>
+                                </attention>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="redirectUrl" class="col-sm-2 control-label" style="width: 200px;">跳转地址</label>
+
+                            <div class="col-sm-10" style="width: 500px;">
+                                <attention form-name="form" name="redirectUrl">
+                                    <input id="redirectUrl" name="redirectUrl" type="text" class="form-control"
+                                           ng-model="advertisement.redirectUrl" />
+                                </attention>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="content" class="col-sm-2 control-label" style="width: 200px;">内容</label>
+
+                            <div class="col-sm-10" style="width: 500px;">
+                                <attention form-name="form" name="content">
+                                    <input id="content" name="content" type="text" class="form-control"
+                                           ng-model="advertisement.content"/>
+                                </attention>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="content" class="col-sm-2 control-label" style="width: 200px;">广告图</label>
+                            <div class="col-sm-10" style="width: 500px;">
+                                <img ng-src="{{advertisement.imageUrl === null ? 'images/admin/logo_ico.png' : advertisement.imageUrl}}">
+                                <div nv-file-drop="" uploader="uploader"
+                                     style="padding-top: 20px; padding-bottom: 20px;   ">
+                                    <div>
+                                        <div class="well my-drop-zone" nv-file-over="" uploader="uploader"
+                                             style="height: 150px;text-align: center;">
+                                            <p style="padding-top: 40px;">拖动图片到此处以完成上传</p>
+                                        </div>
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar"
+                                                 ng-style="{ 'width': uploader.queue[0].progress + '%' }"></div>
+                                        </div>
+                                    </div>
+                                    <div ng-repeat="item in uploader.queue">
+                                        <div ng-thumb="{ file: item._file,width:180}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 text-center" style="width: 700px;margin-top: 30px;">
+                            <button class="btn btn-primary" type="submit" ng-click="confirm();"
+                                    ng-disabled="form.$invalid" style="margin-right: 10px;">保存
+                            </button>
+                            <button class="btn btn-default" type="button" ui-sref="index.advertisementMng">返回列表</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

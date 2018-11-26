@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zanyun.tms.mapper.AuthMapper">
+	
+	<select id="selectById" resultType="com.zanyun.tms.domain.background.Auth" parameterType="java.lang.Integer">
+        select * from `auth` where id= #{id}
+    </select>
+	
+	<select id="select" resultType="com.zanyun.tms.domain.background.Auth" parameterType="java.util.Map">
+		select * from `auth`
+		<where>
+			<if test="name!=null">
+				and `name` = #{name}
+			</if>
+		</where>
+	</select>
+	
+	<resultMap id="AuthViewResult" type="com.zanyun.tms.view.background.AuthView">
+		<id property="id" column="auth_id" />
+		<result property="name" column="auth_name"/>
+		<result property="desc" column="auth_desc"/>
+		<result property="parentId" column="auth_parentId"/>
+		<collection property="subList" javaType="ArrayList" ofType="com.zanyun.tms.view.background.AuthView" resultMap="AuthViewResult1" columnPrefix="sub1_"/>
+	</resultMap>
+	
+	<resultMap id="AuthViewResult1" type="com.zanyun.tms.view.background.AuthView">
+		<id property="id" column="auth_id"/>
+		<result property="name" column="auth_name"/>
+		<result property="desc" column="auth_desc"/>
+		<result property="parentId" column="auth_parentId"/>
+		<collection property="subList" javaType="ArrayList" ofType="com.zanyun.tms.view.background.AuthView" resultMap="AuthViewResult2" columnPrefix="sub2_"/>
+	</resultMap>
+	
+	<resultMap id="AuthViewResult2" type="com.zanyun.tms.view.background.AuthView">
+		<id property="id" column="auth_id"/>
+		<result property="name" column="auth_name"/>
+		<result property="desc" column="auth_desc"/>
+		<result property="parentId" column="auth_parentId"/>
+	</resultMap>
+	
+	<select id="selectViewList" resultMap="AuthViewResult" parameterType="java.util.Map">
+		select
+		a1.id as auth_id,
+		a1.name as auth_name,
+		a1.desc as auth_desc,
+		a1.parentId as auth_parentId,
+		a2.id as sub1_auth_id,
+		a2.name as sub1_auth_name,
+		a2.desc as sub1_auth_desc,
+		a2.parentId as sub1_auth_parentId,
+		a3.id as sub1_sub2_auth_id,
+		a3.name as sub1_sub2_auth_name,
+		a3.desc as sub1_sub2_auth_desc,
+		a3.parentId as sub1_sub2_auth_parentId
+		from `auth` a1
+		left join `auth` a2 on a1.id = a2.parentId
+		left join `auth` a3 on a2.id = a3.parentId
+		where a1.parentId = 0
+		order by a1.id,a2.id,a3.id asc
+	</select>
+	
+	<select id="selectList" resultType="com.zanyun.tms.domain.background.Auth" parameterType="java.util.Map">
+		select a.*
+		from `auth` a
+		left join departmentAuthMapping m on a.id = m.authId
+		<where>
+			<if test="departmentId!=null">
+				and m.`departmentId` = #{departmentId}
+			</if>
+		</where>
+	</select>
+
+</mapper>

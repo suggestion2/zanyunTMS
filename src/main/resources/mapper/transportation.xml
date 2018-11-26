@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zanyun.tms.mapper.TransportationMapper">
+	
+	<select id="selectById" resultType="com.zanyun.tms.domain.background.Transportation" parameterType="java.lang.Integer">
+        select * from `transportation` where id= #{id}
+    </select>
+	
+	<select id="select" resultType="com.zanyun.tms.domain.background.Transportation" parameterType="java.util.Map">
+		select * from `transportation`
+		<where>
+			<if test="licenseNum!=null">
+				and `licenseNum` = #{licenseNum}
+			</if>
+			<if test="engineNum!=null">
+				and `engineNum` = #{engineNum}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectList" resultType="com.zanyun.tms.domain.background.Transportation" parameterType="java.util.Map">
+		select * from `transportation`
+		<where>
+			<if test="content!=null">
+				and `licenseNum` like CONCAT('%',#{content},'%')
+			</if>
+		</where>
+		ORDER BY updateTime DESC 
+		<if test="startIndex != null and pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1) from `transportation`
+		<where>
+			<if test="content!=null">
+				and `name` like CONCAT('%',#{content},'%')
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert" parameterType="com.zanyun.tms.domain.background.Transportation" useGeneratedKeys="true" keyProperty="id">
+        insert into `transportation`
+        (
+        `brand`,
+        `type`,
+        `typeRemarks`,
+        `loadTons`,
+        `loadCubic`,
+        `length`,
+        `width`,
+        `height`,
+        `licenseNum`,
+        `engineNum`,
+        `purchaseDate`,
+        `inspectionDate`,
+        `cargoTypes`,
+        `createBy`,
+        `updateBy`
+        )
+        values
+        (
+        #{brand},
+        #{type},
+        #{typeRemarks},
+        #{loadTons},
+        #{loadCubic},
+        #{length},
+        #{width},
+        #{height},
+        #{licenseNum},
+        #{engineNum},
+        #{purchaseDate},
+        #{inspectionDate},
+        #{cargoTypes},
+        #{updateBy},
+        #{updateBy}
+        )
+    </insert>
+	
+	<update id="update" parameterType="com.zanyun.tms.domain.background.Transportation">
+        update `transportation` set
+    	`brand` = #{brand},
+    	`type` = #{type},
+    	`typeRemarks` = #{typeRemarks},
+    	`loadTons` = #{loadTons},
+    	`loadCubic` = #{loadCubic},
+    	`length` = #{length},
+    	`width` = #{width},
+    	`height` = #{height},
+    	`licenseNum` = #{licenseNum},
+    	`engineNum` = #{engineNum},
+    	`purchaseDate` = #{purchaseDate},
+    	`inspectionDate` = #{inspectionDate},
+    	`cargoTypes` = #{cargoTypes},
+    	`status` = #{status},
+    	`updateBy` = #{updateBy},
+    	`updateTime` = now()
+        where `id` = #{id}
+    </update>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from `transportation` where id = #{id}
+	</delete>
+
+	<resultMap id="paramsResult" type="com.zanyun.tms.domain.background.TransportationParams">
+		<id property="id" column="params_id" />
+		<result property="name" column="params_name"/>
+		<result property="value" column="params_value" typeHandler="com.sug.core.database.mybatis.typeHandler.SimpleStringListHandler"/>
+	</resultMap>
+
+	<select id="selectParams" resultMap="paramsResult" parameterType="java.util.Map">
+		select
+		id as params_id,
+		`name` as params_name,
+		`value` as params_value
+		from `transportationParams`
+	</select>
+</mapper>

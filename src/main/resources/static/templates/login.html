@@ -1,0 +1,154 @@
+<div id="particles" style="position: relative;height: 100%;min-height:100%;background:#2f4050;overflow: hidden;">
+    <div class="login-box" style="position: absolute;left: 50%;top: 50%; margin-left: -180px; margin-top: -260px;z-index: 99;border-radius: 4px;" ng-controller="loginCtl">
+        <div class="login-box-body" style="border-radius: 4px;">
+            <!--登录-->
+            <div class="login-panel" ng-show="showPanel">
+                <div style="text-align: center;margin-bottom: 20px;">
+                    <p style="font-size: 22px;font-weight: 500;color:#2f4050;margin-bottom: 0;padding-top: 20px;">赵霞智慧物流管理中心</p>
+                    <p style="font-size: 16px;font-weight: 500;font-style: italic;color:#2f4050">Management System</p>
+                    <p style="font-size: 12px;color: #2f4050;">v 0.1.1</p>
+                </div>
+                <form role="form" name="form" ng-submit="login();" novalidate>
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" name="name" placeholder="请输入手机号" autofocus ng-model="user.phone" onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;">
+                        <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" name="password" class="form-control" placeholder="请输入密码" ng-model="user.password">
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="checkbox icheck" style="margin-top:0">
+                                <label>
+                                    <i class="fa" ng-class="{'fa-check-square-o':checked==true,'fa-square-o':checked==false}"></i>
+                                    <input type="checkbox" style="display: none" class="checkbox form-control" ng-init="checked=false" ng-click="checked=!checked">
+                                    保持登录
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <a class="pull-right" href="javascript:;" ng-click="showResetPanel()">找回密码</a>
+                        </div>
+                        <div class="col-xs-12" style="margin-top: 10px;">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat" style="border-radius: 4px;padding:10px 12px;">登录</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="social-auth-links text-center">
+                    <p style="padding-top:20px;">- OR -</p>
+                    <p class="text-center"><a href="javascript:;" ng-click="showAccTip()">如何获取账号密码</a></p>
+                </div>
+
+
+            </div>
+            <!--忘记密码-->
+            <div class="reset-panel" ng-hide="showPanel">
+                <p class="login-box-msg" style="font-size: 20px;font-weight: 500;color:#2f4050;margin-bottom: 0;padding-top: 20px;">重设登录密码</p>
+                <form role="form" name="form">
+                    <div class="form-group has-feedback">
+                        <attention form-name="form1" name="phone">
+                            <input type="text" class="form-control" name="phone" ng-required="true" smart-pattern="phone"
+                                   ng-model="forget.phone" placeholder="请输入手机号"/>
+                        </attention>
+                        <span class="glyphicon glyphicon-earphone form-control-feedback"></span>
+                    </div>
+                    <div class="form-group input-group has-feedback">
+                        <span class="input-group-addon sendVerCodeBtn" ng-click="sendCaptcha();" ng-disabled="form1.phone.$invalid">验证手机号</span>
+                        <attention form-name="form1" name="captcha">
+                            <input type="text" class="form-control" name="captcha" ng-required="true"
+                                   ng-model="forget.captcha" placeholder="请输入验证码"/>
+                        </attention>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" style="z-index: 3"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <attention form-name="form1" name="password">
+                            <input type="password" class="form-control" name="password" ng-required="true"
+                                   ng-model="forget.password" placeholder="请输入密码"/>
+                        </attention>
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row" style="padding-bottom: 10px;">
+                        <div class="col-xs-12" style="margin-top: 20px;">
+                            <button type="button" class="btn btn-primary btn-block" style="padding: 10px 12px;" ng-click="forgetPwd();" ng-disabled="form1.$invalid">确认重设</button>
+                            <p style="padding-top:20px;" class="text-center">- OR -</p>
+                            <p class="text-center"><a href="javascript:;"  ng-click="chancelReset()">返回登录</a></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<!--获取账号提示-->
+<div class="modal fade" id="getAccTip" tabindex="-1" role="dialog" aria-labelledby="getAccTip" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    账号密码获取方式
+                </h4>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                联系你的部门或系统管理员申请赵霞物流业务管理后台账号
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">我知道了</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="noPcTip" tabindex="-1" role="dialog" aria-labelledby="getAccTip" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    重要提示
+                </h4>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                请使用PC电脑端登录管理后台
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/jquery.particleground.min.js"></script>
+<script>
+    $(function(){
+        /*判断是否pc端登陆*/
+        if(IsPC()==false){
+            $('#noPcTip').modal('show');
+        }
+        $('body').removeClass('sticky-header').addClass('login-page');
+        $('body').css({'height':'100%'});
+        $('html').css({'height':'100%'});
+
+        //动态背景
+        $('#particles').particleground({
+            dotColor: 'rgba(255,255,255,.2)',
+            lineColor: 'rgba(255,255,255,.2)'
+        });
+        $('.intro').css({
+            'margin-top': -($('.intro').height() / 2)
+        });
+
+        function IsPC() {
+            var userAgentInfo = navigator.userAgent;
+            var Agents = ["Android", "iPhone",
+                "SymbianOS", "Windows Phone",
+                "iPad", "iPod"];
+            var flag = true;
+            for (var v = 0; v < Agents.length; v++) {
+                if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+        }
+    });
+</script>
+

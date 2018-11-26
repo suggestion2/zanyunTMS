@@ -1,0 +1,185 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > <a href="/background#/index/transportation/list">运力管理</a> > 新增/编辑运力</span></div>
+</section>
+<section class="content" ng-controller="transportationFormCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-body" style="padding: 50px 0;">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="licenseNum" class="col-sm-3 control-label">车牌号</label>
+                                        <div class="col-sm-9">
+                                            <attention form-name="form" name="licenseNum">
+                                                <input name="licenseNum" id="licenseNum" type="text" class="form-control"
+                                                       ng-disabled="checkAuth()" ng-model="transportation.licenseNum"
+                                                       ng-required="true"/>
+                                            </attention>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="engineNum" class="col-sm-3 control-label">发动机号</label>
+                                        <div class="col-sm-9">
+                                            <attention form-name="form" name="engineNum">
+                                                <input name="engineNum" id="engineNum" type="text" class="form-control"
+                                                       ng-disabled="checkAuth()" ng-model="transportation.engineNum"
+                                                       ng-required="true"/>
+                                            </attention>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label class="col-sm-3 control-label">品牌</label>
+                                        <ul class="col-sm-9 clearfix" style="padding-top: 7px;">
+                                            <li ng-repeat="item in brands" class="col-xs-3">
+                                                <label>
+                                                    <i class="fa"
+                                                       ng-class="{'fa-check-square-o':check('brand',item)==true,'fa-square-o':check('brand',item)==false}"></i>
+                                                    <input type="checkbox" style="display: none" class="checkbox form-control" ng-disabled="checkAuth()"
+                                                           ng-click="choose('brand',item)"/>
+                                                </label>
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="col-sm-3 control-label">车型</label>
+                                        <ul class="col-sm-9 clearfix" style="padding-top: 7px;">
+                                            <li ng-repeat="item in types" class="col-xs-3">
+                                                <label>
+                                                    <i class="fa"
+                                                       ng-class="{'fa-check-square-o':check('type',item)==true,'fa-square-o':check('type',item)==false}"></i>
+                                                    <input type="checkbox" style="display: none" class="checkbox form-control" ng-disabled="checkAuth()"
+                                                           ng-click="choose('type',item)"/>
+                                                </label>
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="typeRemarks" class="col-sm-3 control-label">车型备注</label>
+                                        <div class="col-sm-9">
+                                            <attention form-name="form" name="typeRemarks">
+                                                <input name="typeRemarks" id="typeRemarks" type="text" class="form-control"
+                                                       ng-disabled="checkAuth()" ng-model="transportation.typeRemarks"
+                                                       ng-required="true"/>
+                                            </attention>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="loadTons" class="col-sm-3 control-label">载重(吨)</label>
+                                        <div class="col-sm-9">
+                                            <attention form-name="form" name="loadTons">
+                                                <input name="loadTons" id="loadTons" type="text" class="form-control"
+                                                       ng-disabled="checkAuth()" ng-model="transportation.loadTons"
+                                                       ng-required="true"/>
+                                            </attention>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="loadCubic" class="col-sm-3 control-label">载货空间(立方米)</label>
+                                        <div class="col-sm-9">
+                                            <attention form-name="form" name="loadCubic">
+                                                <input name="loadCubic" id="loadCubic" loadCubic="text" class="form-control"
+                                                       ng-disabled="checkAuth()" ng-model="transportation.loadCubic"
+                                                       ng-required="true"/>
+                                            </attention>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="length" class="col-sm-3 control-label">载货车厢长度(米)</label>
+                                        <div class="col-sm-9">
+                                            <attention form-name="form" name="length">
+                                                <input name="length" id="length" type="text" class="form-control"
+                                                       ng-disabled="checkAuth()" ng-model="transportation.length"
+                                                       ng-required="true"/>
+                                            </attention>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="width" class="col-sm-3 control-label">载货车厢宽度(米)</label>
+                                        <div class="col-sm-9">
+                                            <attention form-name="form" name="width">
+                                                <input name="width" id="width" width="text" class="form-control"
+                                                       ng-disabled="checkAuth()" ng-model="transportation.width"
+                                                       ng-required="true"/>
+                                            </attention>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="height" class="col-sm-3 control-label">载货车厢高度(米)</label>
+                                        <div class="col-sm-9">
+                                            <attention form-name="form" name="height">
+                                                <input name="height" id="height" height="text" class="form-control"
+                                                       ng-disabled="checkAuth()" ng-model="transportation.height"
+                                                       ng-required="true"/>
+                                            </attention>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="purchaseDate" class="col-sm-3 control-label">购买时间</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <attention form-name="form" name="inspectionDate">
+                                                    <input ng-time name="purchaseDate" id="purchaseDate" placeholder="请选择购买时间" inspectionDate="text" type="text" ng-disabled="checkAuth()" ng-required="true" ng-model="transportation.purchaseDate"  class="form-control date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd" ng-readonly="true">
+                                                </attention>
+                                                <label for="purchaseDate" class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="inspectionDate" class="col-sm-3 control-label">年检时间</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <attention form-name="form" name="inspectionDate">
+                                                    <input ng-time name="inspectionDate" id="inspectionDate" inspectionDate="text" placeholder="请选择年检时间" ng-disabled="checkAuth()" ng-required="true" ng-model="transportation.inspectionDate"  class="form-control date form_date" data-date="" data-date-format="mm-dd" data-link-format="mm-dd" ng-readonly="true">
+                                                </attention>
+                                                <label for="inspectionDate" class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label class="col-sm-3 control-label">装货类型</label>
+                                        <ul class="col-sm-9 clearfix" style="padding-top: 7px;">
+                                            <li ng-repeat="item in cargoTypes" class="col-xs-3">
+                                                <label>
+                                                    <i class="fa"
+                                                       ng-class="{'fa-check-square-o':check('cargoTypes',item)==true,'fa-square-o':check('cargoTypes',item)==false}"></i>
+                                                    <input type="checkbox" style="display: none" class="checkbox form-control" ng-disabled="checkAuth()"
+                                                           ng-click="choose('cargoTypes',item)"/>
+                                                </label>
+                                                {{item}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-center" style="margin-top: 30px;">
+                                    <button class="btn btn-primary" type="submit" ng-click="confirm()"
+                                            ng-disabled="form.$invalid" style="margin-right: 10px;" ng-show="!checkAuth()">保存
+                                    </button>
+                                    <button class="btn btn-default" type="button" ui-sref="index.transportationMng">返回列表</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

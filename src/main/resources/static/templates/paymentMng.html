@@ -1,0 +1,107 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > <a
+            href="/background#/index/payment/list">结算管理</a> > 结算列表</span></div>
+</section>
+<section class="content" ng-controller="paymentMngCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header clearfix box-search">
+                    <form class="form-horizontal pull-right" role="form">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="请输入账单编号"
+                                       ng-model="tableParams.filter().content">
+                                <span class="input-group-addon" ng-click="tableReload()"><i
+                                        class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div style="margin-top: 20px;">
+                    <uib-tabset active="activeJustified" justified="true">
+                        <uib-tab index="0" heading="已支付" ng-click="setStatus(1)">
+                            <div ng-include="'pageBody'"></div>
+                        </uib-tab>
+                        <uib-tab index="1" heading="已退款" ng-click="setStatus(-2)">
+                            <div ng-include="'pageBody'"></div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModal"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        退款<span
+                            style="margin-left: 30px;color: #999;font-size: 12px;">(说明：退款流水号填写线下退款方式的流水号，用于记录)</span>
+                    </h4>
+                </div>
+
+                <form role="form" name="form1">
+                    <div class="modal-body">
+
+                        <div class="row" style="margin-top: 10px">
+                            <label class="col-sm-3 text-right" style="margin-top:6px;">退款流水号:</label>
+                            <div class="col-sm-8">
+                                <attention form-name="form1" name="number">
+                                    <input type="text" class="form-control" name="number" ng-required="true"
+                                           ng-model="refundForm.refundNum"/>
+                                </attention>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <label class="col-sm-3 text-right" style="margin-top:6px;">退款原因:</label>
+                            <div class="col-sm-8">
+                                <attention form-name="form1" name="remark">
+                                    <input type="text" class="form-control" name="remark" ng-required="true"
+                                           ng-model="refundForm.remark"/>
+                                </attention>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer" style="text-align: center;">
+                        <button type="button" class="btn btn-primary" ng-click="refund();" ng-disabled="form1.$invalid">
+                            确认
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/ng-template" id="pageBody">
+    <div class="box-body">
+        <table ng-table="tableParams" class="table table-bordered table-condensed table-hover">
+            <tr ng-repeat="item in $data"
+                ng-style="{'test' : mouseoverStyle(item.id)}"
+                ng-class="{'warning' : clickStyle(item.id)}"
+                style="cursor: pointer" ng-mouseenter="getMouseoverId(item.id)"
+                ng-mouseleave="getMouseoverId(0)">
+                <td style="padding-left: 20px;" class="col-xs-1" data-title="'账单编号'"
+                    ng-bind="item.number"></td>
+                <td class="col-xs-1" data-title="'订单编号'" ng-bind="item.orderNum"></td>
+                <td class="col-xs-1" data-title="'类型'" ng-bind="item.typeName"></td>
+                <td class="col-xs-1" data-title="'支付金额(元)'" ng-bind="item.amount"></td>
+                <td class="col-xs-1" data-title="'状态'" ng-bind="item.statusName"></td>
+                <td class="col-xs-1" data-title="'操作'">
+                    <a class="btn btn-primary btn-xs" href="javascript:;"
+                       ng-click="showRefund(item.id)" ng-show="item.type === 1&& item.status === 1">退款</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</script>
+

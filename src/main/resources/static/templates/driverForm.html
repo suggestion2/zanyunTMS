@@ -1,0 +1,197 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > <a href="/background#/index/driver/list">司机管理</a> > 司机详情</span></div>
+</section>
+<section class="content" ng-controller="driverFormCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header" style="color:#999;">* 审核信息时，若审核通过则全部不勾选；若审核不通过，勾选不通过的选项，并填写驳回原因。</div>
+                <div class="box-body" style="padding: 50px 0;">
+                    <form class="form-horizontal clearfix" name="form" role="form" novalidate>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label col-xs-3">司机姓名</label>
+                            <label class="control-label col-xs-1" ng-show="driver.status == 2">
+                                <i class="fa" ng-class="{'fa-check-square-o':rejectForm.name === null || rejectForm.name === '','fa-square-o':rejectForm.name === driver.name}"></i>
+                                <input type="checkbox" class="checkbox form-control hide" ng-click="chosen('name')"/>
+                            </label>
+                            <div  ng-class="{true: 'col-xs-8', false: 'col-xs-9'}[driver.status == 2]">
+                                <input name="name" type="text" class="form-control" ng-disabled="true" ng-model="driver.name"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label col-xs-3">手机号</label>
+                            <label class="control-label col-xs-1" ng-show="driver.status == 2">
+                                <i class="fa" ng-class="{'fa-check-square-o':rejectForm.phone === null || rejectForm.phone === '','fa-square-o':rejectForm.phone === driver.phone}"></i>
+                                <input type="checkbox" class="checkbox form-control hide" ng-disable="true"/>
+                            </label>
+                            <div ng-class="{true: 'col-xs-8', false: 'col-xs-9'}[driver.status == 2]">
+                                <input name="name" type="text" class="form-control" ng-disabled="true" ng-model="driver.phone"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label col-xs-3">证件类型</label>
+                            <label class="control-label col-xs-1" ng-show="driver.status == 2">
+                                <i class="fa" ng-class="{'fa-check-square-o':rejectForm.licenseType === null || rejectForm.licenseType === '','fa-square-o':rejectForm.licenseType === driver.licenseType}"></i>
+                                <input type="checkbox" class="checkbox form-control hide" ng-disable="true"/>
+                            </label>
+                            <div ng-class="{true: 'col-xs-8', false: 'col-xs-9'}[driver.status == 2]">
+                                <input name="name" type="text" class="form-control" ng-disabled="true" ng-model="driver.licenseType"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label col-xs-3">证件编号</label>
+                            <label class="control-label col-xs-1" ng-show="driver.status == 2">
+                                <i class="fa" ng-class="{'fa-check-square-o':rejectForm.licenseNum === null || rejectForm.licenseNum === '','fa-square-o':rejectForm.licenseNum === driver.licenseNum}"></i>
+                                <input type="checkbox" class="checkbox form-control hide" ng-click="chosen('licenseNum')"/>
+                            </label>
+                            <div ng-class="{true: 'col-xs-8', false: 'col-xs-9'}[driver.status == 2]">
+                                <input name="name" type="text" class="form-control" ng-disabled="true" ng-model="driver.licenseNum"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label col-xs-3">驾龄</label>
+                            <label class="control-label col-xs-1" ng-show="driver.status == 2">
+                                <i class="fa" ng-class="{'fa-check-square-o':rejectForm.drivingExp === null || rejectForm.drivingExp === '','fa-square-o':rejectForm.drivingExp === driver.drivingExp}"></i>
+                                <input type="checkbox" class="checkbox form-control hide" ng-click="chosen('drivingExp')"/>
+                            </label>
+                            <div ng-class="{true: 'col-xs-8', false: 'col-xs-9'}[driver.status == 2]">
+                                <input name="name" type="text" class="form-control" ng-disabled="true" ng-model="driver.drivingExp"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label col-xs-3">领证日期</label>
+                            <label class="control-label col-xs-1" ng-show="driver.status == 2">
+                                <i class="fa" ng-class="{'fa-check-square-o':rejectForm.licenseEffTime === null || rejectForm.licenseEffTime === '','fa-square-o':rejectForm.licenseEffTime === driver.licenseEffTime}"></i>
+                                <input type="checkbox" class="checkbox form-control hide" ng-click="chosen('licenseEffTime')"/>
+                            </label>
+                            <div ng-class="{true: 'col-xs-8', false: 'col-xs-9'}[driver.status == 2]">
+                                <input name="name" type="text" class="form-control" ng-disabled="true" ng-model="driver.licenseEffTime"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label col-xs-3">驾照生效时间</label>
+                            <label class="control-label col-xs-1" ng-show="driver.status == 2">
+                                <i class="fa" ng-class="{'fa-check-square-o':rejectForm.licenseStartTime === null || rejectForm.licenseStartTime === '','fa-square-o':rejectForm.licenseStartTime === driver.licenseStartTime}"></i>
+                                <input type="checkbox" class="checkbox form-control hide" ng-click="chosen('licenseStartTime')"/>
+                            </label>
+                            <div ng-class="{true: 'col-xs-8', false: 'col-xs-9'}[driver.status == 2]">
+                                <input name="name" type="text" class="form-control" ng-disabled="true" ng-model="driver.licenseStartTime"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label col-xs-3">驾照有效期</label>
+                            <label class="control-label col-xs-1" ng-show="driver.status == 2">
+                                <i class="fa" ng-class="{'fa-check-square-o':rejectForm.expiredTime === null || rejectForm.expiredTime === '','fa-square-o':rejectForm.expiredTime === driver.expiredTime}"></i>
+                                <input type="checkbox" class="checkbox form-control hide" ng-click="chosen('expiredTime')"/>
+                            </label>
+                            <div ng-class="{true: 'col-xs-8', false: 'col-xs-9'}[driver.status == 2]">
+                                <input name="name" type="text" class="form-control" ng-disabled="true" ng-model="driver.expiredTime"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label col-xs-3">行驶证编号</label>
+                            <label class="control-label col-xs-1" ng-show="driver.status == 2">
+                                <i class="fa" ng-class="{'fa-check-square-o':rejectForm.dLicenseNum === null || rejectForm.dLicenseNum === '','fa-square-o':rejectForm.dLicenseNum === driver.dLicenseNum}"></i>
+                                <input type="checkbox" class="checkbox form-control hide" ng-click="chosen('dLicenseNum')"/>
+                            </label>
+                            <div ng-class="{true: 'col-xs-8', false: 'col-xs-9'}[driver.status == 2]">
+                                <input name="name" type="text" class="form-control" ng-disabled="true" ng-model="driver.dLicenseNum"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label col-xs-3">发动机编号</label>
+                            <label class="control-label col-xs-1" ng-show="driver.status == 2">
+                                <i class="fa" ng-class="{'fa-check-square-o':rejectForm.engineNum === null || rejectForm.engineNum === '','fa-square-o':rejectForm.engineNum === driver.engineNum}"></i>
+                                <input type="checkbox" class="checkbox form-control hide" ng-click="chosen('engineNum')"/>
+                            </label>
+                            <div ng-class="{true: 'col-xs-8', false: 'col-xs-9'}[driver.status == 2]">
+                                <input name="name" type="text" class="form-control" ng-disabled="true" ng-model="driver.engineNum"/>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label col-xs-3">驾驶证和行驶证</label>
+                            <label class="control-label col-xs-1" ng-show="driver.status == 2">
+                                <i class="fa" ng-class="{'fa-check-square-o':rejectForm.licenseUrl === null || rejectForm.licenseUrl === '','fa-square-o':rejectForm.licenseUrl === driver.licenseUrl}"></i>
+                                <input type="checkbox" class="checkbox form-control hide" ng-click="chosen('licenseUrl')"/>
+                            </label>
+                            <div ng-class="{true: 'col-xs-8', false: 'col-xs-9'}[driver.status == 2]">
+                                <img ng-src="{{driver.licenseUrl.length > 0 ? driver.licenseUrl: 'images/zj404.png'}}" style="max-width: 100%" ng-click="showImg(driver.licenseUrl)">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label col-xs-3">车辆实拍图</label>
+                            <label class="control-label col-xs-1" ng-show="driver.status == 2">
+                                <i class="fa" ng-class="{'fa-check-square-o':rejectForm.dLicenseUrl === null || rejectForm.dLicenseUrl === '','fa-square-o':rejectForm.dLicenseUrl === driver.dLicenseUrl}"></i>
+                                <input type="checkbox" class="checkbox form-control hide" ng-click="chosen('dLicenseUrl')"/>
+                            </label>
+                            <div ng-class="{true: 'col-xs-8', false: 'col-xs-9'}[driver.status == 2]">
+                                <img ng-src="{{driver.dLicenseUrl.length > 0 ? driver.dLicenseUrl: 'images/zj404.png'}}" style="max-width: 100%" ng-click="showImg(driver.dLicenseUrl)">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12" style="margin-top: 30px;">
+                            <div class="text-center">
+                                <button class="btn btn-primary" type="submit" ng-click="confirm()" style="margin-right: 10px;" ng-show="driver.status == 2">审核通过</button>
+                                <button class="btn btn-primary" type="submit" ng-click="reject()" style="margin-right: 10px;" ng-show="driver.status == 2 " ng-disabled="changeCount === 0">驳回</button>
+                                <button class="btn btn-primary" type="submit" ng-click="enable()" style="margin-right: 10px;" ng-show="driver.status === -1 " >启用</button>
+                                <button class="btn btn-primary" type="submit" ng-click="showDisable()" style="margin-right: 10px;" ng-show="driver.status === 3 " >禁用</button>
+                                <button class="btn btn-default" type="button" ui-sref="index.driverMng">返回列表</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--查看图片-->
+    <div class="modal fade" id="imgModal" tabindex="-1" role="dialog" aria-labelledby="imgModal" aria-hidden="true">
+        <div class="modal-dialog" style="max-width: 700px">
+            <div class="modal-content" >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        查看图片
+                    </h4>
+                </div>
+                <div class="modal-body" style="overflow: hidden">
+                    <img src="{{showImgSrc.src}}" class="bigImg" style="transform:rotate({{showImgSrc.rotate+'deg'}});max-width: 100%" >
+                </div>
+                <div class="modal-footer" style="text-align: center;">
+                    <button type="button" class="btn btn-primary"  ng-click="showImgSrc.rotate=showImgSrc.rotate+90">向右转</button>
+                    <button type="button" class="btn btn-primary"  ng-click="showImgSrc.rotate=showImgSrc.rotate-90">向左转</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="disableModal" tabindex="-1" role="dialog" aria-labelledby="disableModal"
+         aria-hidden="true">
+        <div class="modal-dialog" style="max-width: 400px">
+            <div class="modal-content" >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        禁用司机
+                    </h4>
+                </div>
+
+                <form role="form" name="form1">
+                    <div class="modal-body">
+                        <p style="margin-top:6px;">禁用司机将删除司机相关验证信息</p>
+                    </div>
+
+                    <div class="modal-footer" style="text-align: center;">
+                        <button type="button" class="btn btn-primary" ng-click="disable();" ng-disabled="form1.$invalid">
+                            确认
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

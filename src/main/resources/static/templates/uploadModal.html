@@ -1,0 +1,40 @@
+<div class="modal-dialog">
+    <div class="modal-content clearfix">
+        <div class="modal-header">
+            <div class="col-md-10">
+                <h4 class="modal-title">上传图片</h4>
+            </div>
+            <div class="col-md-2 right">
+                <a class="close" href data-ng-click="$dismiss()"><span class="glyphicon glyphicon-remove"></span></a>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div nv-file-drop="" uploader="uploader"
+                         style="padding-top: 20px; padding-bottom: 20px;   ">
+                        <div class="col-xs-12">
+                            <div class="well my-drop-zone" nv-file-over="" uploader="uploader"
+                                 style="height: 150px;text-align: center;">
+                                <p style="padding-top: 40px;">拖动图片到此处以完成上传</p>
+                            </div>
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress-bar" role="progressbar"
+                                     ng-style="{ 'width': uploader.queue[0].progress + '%' }"></div>
+                            </div>
+                        </div>
+                        <div ng-repeat="item in uploader.queue">
+                            <div ng-thumb="{ file: item._file,width:180}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer center clearfix">
+            <button data-ng-click="$dismiss()" type="button" class="btn btn-default pull-left">取消</button>
+            <button data-ng-click="uploadImage()"
+                    class="btn btn-primary pull-right">确定
+            </button>
+        </div>
+    </div>
+</div>

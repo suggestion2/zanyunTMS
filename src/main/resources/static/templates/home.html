@@ -1,0 +1,55 @@
+<header class="main-header">
+    <!-- Logo -->
+    <a href="/background#/index" class="logo" style="width: 180px;">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><img src="/images/admin/logo_ico.png "></span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><img src="/images/admin/logo.png" style="width: 100%;"></span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-left: 180px;">
+        <!-- Sidebar toggle button-->
+        <!--<a href="javascript:;" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>-->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav" ng-controller="loginOut">
+                <li class="user user-menu dropdown">
+                    <a href="javascript:;" style="margin-right: 20px;"  class="dropdown-toggle" data-toggle="dropdown">
+                        <span>欢迎你，{{user.name}}</span><span class="fa fa-chevron-down" style="margin-left: 10px;"></span>
+                    </a>
+                    <ul class="dropdown-menu ydc-topnav">
+                        <li><a href="/background#/index/userInfo">个人信息</a></li>
+                        <li><a href="javascript:;" ng-click="loginOut()">安全退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<script type="text/javascript">
+    $(function(){
+        dropdownOpen();
+        function dropdownOpen() {
+            var $dropdownLi = $('li.dropdown');
+            $dropdownLi.mouseover(function() {
+                $(this).addClass('open');
+            }).mouseout(function() {
+                $(this).removeClass('open');
+            });
+        }
+    })
+
+</script>
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <div id="navList" class="left-side-inner" ui-view="nav" ng-controller="navCtrl">
+
+        </div>
+    </section>
+</aside>
+<div class="content-wrapper" ui-view="main">
+
+</div>

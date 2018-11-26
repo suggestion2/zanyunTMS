@@ -1,0 +1,60 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > <a href="/background#/index/driver/list">司机管理</a> > 司机列表</span></div>
+</section>
+<section class="content" ng-controller="driverMngCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header clearfix box-search">
+                    <form class="form-horizontal pull-right" role="form">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="请输入司机姓名/手机/常往返地址" ng-model="tableParams.filter().content">
+                                <span class="input-group-addon" ng-click="tableReload()"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <uib-tabset active="activeJustified" justified="true">
+                    <uib-tab index="0" heading="未完善资料" ng-click="setStatus(1)">
+                        <div ng-include="'pageBody'"></div>
+                    </uib-tab>
+                    <uib-tab index="1" heading="待审核" ng-click="setStatus(2)">
+                        <div ng-include="'pageBody'"></div>
+                    </uib-tab>
+                    <uib-tab index="2" heading="审核通过" ng-click="setStatus(3)">
+                        <div ng-include="'pageBody'"></div>
+                    </uib-tab>
+                    <uib-tab index="3" heading="审核未通过" ng-click="setStatus(0)">
+                        <div ng-include="'pageBody'"></div>
+                    </uib-tab>
+                    <uib-tab index="3" heading="已禁用" ng-click="setStatus(-1)">
+                        <div ng-include="'pageBody'"></div>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/ng-template" id="pageBody">
+    <div class="box-body">
+        <table ng-table="tableParams" class="table table-bordered table-condensed table-hover">
+            <tr ng-repeat="item in $data"
+                ng-style="{'test' : mouseoverStyle(item.id)}"
+                ng-class="{'warning' : clickStyle(item.id)}"
+                style="cursor: pointer" ng-mouseenter="getMouseoverId(item.id)" ng-mouseleave="getMouseoverId(0)">
+                <td style="padding-left: 20px;" class="col-xs-1" data-title="'司机id'" ng-bind="item.id"></td>
+                <td style="padding-left: 20px;" class="col-xs-1" data-title="'司机姓名'" ng-bind="item.name"></td>
+                <td class="col-xs-1" data-title="'司机手机'">
+                    {{item.phone}}
+                </td>
+                <td class="col-xs-1" data-title="'注册时间'" ng-bind="item.createTime"></td>
+                <td data-title="'专线1'" >{{item.taskAddress1}}--{{item.taskAddress2}}</td>
+                <td data-title="'专线2'" >{{item.taskAddress3}}--{{item.taskAddress4}}</td>
+                <td class="col-xs-1" data-title="'状态'" ng-bind="item.statusName"></td>
+                <td class="col-xs-1" data-title="'操作'"><a class="btn btn-primary btn-xs" href="javascript:;" ng-click="info(item.id)">编辑</a></td>
+            </tr>
+        </table>
+    </div>
+</script>

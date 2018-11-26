@@ -1,0 +1,53 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > 财务管理</div>
+</section>
+
+<section class="content" ng-controller="chart">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-body" style="padding-top: 50px;padding-bottom: 50px;">
+                    <uib-tabset active="activeJustified" justified="true">
+                        <uib-tab index="0" heading="订单数">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="box box-primary">
+                                        <canvas style="margin-top: 20px;" id="bar" class="chart chart-bar"
+                                                chart-data="data" chart-labels="labels" chart-series="series" chart-options="options"
+                                                chart-dataset-override="datasetOverride">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab index="1" heading="成交量">
+                            <div class="row" style="margin-top: 20px;">
+                                <div class="col-md-12">
+                                    <div class="box box-primary">
+                                        <canvas style="margin-top: 20px;" id="line" class="chart chart-line" chart-data="data1"
+                                                chart-labels="labels1" chart-series="series1" chart-options="options"
+                                                chart-dataset-override="datasetOverride" >
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab index="2" heading="新用户">
+                            <div class="row" style="margin-top: 20px;">
+                                <div class="col-md-12">
+                                    <div class="box box-primary">
+                                        <canvas style="margin-top: 20px;" id="bar2" class="chart chart-bar"
+                                                chart-data="data2" chart-labels="labels2" chart-series="series2" chart-options="options"
+                                                chart-dataset-override="datasetOverride">
+                                        </canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,35 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > <a href="/background#/index/userLog/list">日志列表</a> > 日志列表</span></div>
+</section>
+<section class="content" ng-controller="userLogMngCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header clearfix box-search">
+                    <form class="form-horizontal pull-right" role="form">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="请输入员工姓名/手机" ng-model="tableParams.filter().content">
+                                <span class="input-group-addon" ng-click="tableReload()"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="box-body">
+                    <table ng-table="tableParams" class="table table-bordered table-condensed table-hover">
+                        <tr ng-repeat="item in $data"
+                            ng-style="{'test' : mouseoverStyle(item.id)}"
+                            ng-class="{'warning' : clickStyle(item.id)}"
+                            style="cursor: pointer" ng-mouseenter="getMouseoverId(item.id)" ng-mouseleave="getMouseoverId(0)">
+                            <td style="padding-left: 20px;" class="col-xs-2" data-title="'员工姓名'" ng-bind="item.userName"></td>
+                            <td class="col-xs-2" data-title="'员工手机'" ng-bind="item.userPhone"></td>
+                            <td class="col-xs-2" data-title="'登录IP'" ng-bind="item.ipAddress"></td>
+                            <td class="col-xs-2" data-title="'登录时间'" ng-bind="item.loginTime"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

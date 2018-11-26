@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zanyun.tms.mapper.OrderCountMapper">
+	
+	<select id="select" resultType="com.zanyun.tms.domain.background.OrderCount" parameterType="java.lang.Integer">
+        select * from `order_count`
+        where to_days(createTime) = to_days(#{date})
+    </select>
+	
+	<select id="selectList" resultType="com.zanyun.tms.domain.background.OrderCount" parameterType="java.util.Map">
+		select * from `order_count`
+		where DATE_SUB(CURDATE(), INTERVAL #{days} DAY) &lt;= createTime
+	</select>
+	
+	<insert id="insert" parameterType="com.zanyun.tms.domain.background.OrderCount" useGeneratedKeys="true" keyProperty="id">
+		insert into `order_count`
+		(
+		`paidCount`,
+		`transportCount`,
+		`completeCount`,
+		`createTime`
+		)
+		values
+		(
+		#{paidCount},
+		#{transportCount},
+		#{completeCount},
+		#{createTime}
+		)
+	</insert>
+
+</mapper>

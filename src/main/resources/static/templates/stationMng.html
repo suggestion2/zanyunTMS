@@ -1,0 +1,42 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > <a href="/background#/index/station/list">场站列表</a> > 场站列表</span></div>
+</section>
+<section class="content" ng-controller="stationMngCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header clearfix box-search">
+                    <button type="button" class="btn btn-primary pull-left" ui-sref="index.insertStation"><i class="fa fa-plus"></i> 新增场站</button>
+                    <form class="form-horizontal pull-right" role="form">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="请输入场站名" ng-model="tableParams.filter().content">
+                                <span class="input-group-addon" ng-click="tableReload()"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="box-body">
+                    <table ng-table="tableParams" class="table table-bordered table-condensed table-hover">
+                        <tr ng-repeat="item in $data"
+                            ng-style="{'test' : mouseoverStyle(item.id)}"
+                            ng-class="{'warning' : clickStyle(item.id)}"
+                            style="cursor: pointer" ng-mouseenter="getMouseoverId(item.id)" ng-mouseleave="getMouseoverId(0)">
+                            <td class="col-xs-2" data-title="'场站名'" >
+                                {{item.name}}
+                            </td>
+                            <td class="col-xs-2" data-title="'所在省'" ng-bind="item.province"></td>
+                            <td class="col-xs-2" data-title="'所在市'" ng-bind="item.city"></td>
+                            <td class="col-xs-2" data-title="'所在区'" ng-bind="item.county"></td>
+                            <td class="col-xs-2" data-title="'详细地址'" ng-bind="item.address"></td>
+                            <td class="col-xs-2" data-title="'操作'">
+                                <a class="btn btn-primary btn-xs" href="javascript:;" ui-sref="index.updateStation({id : item.id})">编辑</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

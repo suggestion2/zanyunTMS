@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zanyun.tms.mapper.ArticleMapper">
+	
+	<select id="selectById" resultType="com.zanyun.tms.domain.background.Article" parameterType="java.lang.Integer">
+        select * from `article` where id= #{id}
+    </select>
+	
+	<select id="selectList" resultType="com.zanyun.tms.domain.background.Article" parameterType="java.util.Map">
+		select id,title,summary,`type`,readCount,createTime,status,coverImageUrl from `article`
+		<where>
+			<if test="content != null">
+				title like concat ('%',#{content},'%')
+			</if>
+			<if test="status != null">
+				status = #{status}
+			</if>
+		</where>
+		order by createTime DESC
+		<if test="startIndex != null and pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1) from `article`
+		<where>
+			<if test="content != null">
+				title like concat ('%',#{content},'%')
+			</if>
+			<if test="status != null">
+				status = #{status}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert" parameterType="com.zanyun.tms.domain.background.Article" useGeneratedKeys="true" keyProperty="id">
+        insert into `article`
+        (
+        `title`,
+        `summary`,
+        `content`,
+        `type`,
+        `coverImageUrl`,
+        `status`
+        )
+        values
+        (
+        #{title},
+        #{summary},
+        #{content},
+        #{type},
+        #{coverImageUrl},
+        #{status}
+        )
+    </insert>
+	
+	<update id="update" parameterType="com.zanyun.tms.domain.background.Article">
+        update `article` set
+    	`title` = #{title},
+    	`summary` = #{summary},
+    	`content` = #{content},
+    	`readCount` = #{readCount},
+    	`type` = #{type},
+    	`coverImageUrl` = #{coverImageUrl},
+    	`status` = #{status}
+        where `id` = #{id}
+    </update>
+	
+	<update id="updateCount" parameterType="com.zanyun.tms.domain.background.Article">
+		update `article` set
+		`readCount` = #{readCount}
+		where `id` = #{id}
+	</update>
+</mapper>

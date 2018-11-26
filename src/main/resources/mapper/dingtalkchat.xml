@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zanyun.tms.mapper.DingtalkchatMapper">
+	
+	<select id="selectById" resultType="com.zanyun.tms.domain.Dingtalkchat" parameterType="java.lang.Integer">
+        select * from dingtalkchat where id= #{id}
+    </select>
+    
+    <select id="select" resultType="com.zanyun.tms.domain.Dingtalkchat" parameterType="java.util.Map">
+        select * from dingtalkchat
+        <where>
+            <if test="main!=null">
+                and main = #{main}
+            </if>
+        </where>
+    </select>
+    
+	<insert id="insert" parameterType="com.zanyun.tms.domain.Dingtalkchat">
+        insert into dingtalkchat
+        (
+        `chatId`,
+        `name`,
+        `departmentId`
+        )
+        values
+        (
+        #{chatId},
+        #{name},
+        #{departmentId}
+        )
+    </insert>
+    
+    <update id="update" parameterType="com.zanyun.tms.domain.Dingtalkchat">
+        update dingtalkchat set
+        `chatId` = #{chatId},
+        `name` = #{name},
+        `departmentId` = #{departmentId}
+        where `id` = #{id}
+    </update>
+
+</mapper>

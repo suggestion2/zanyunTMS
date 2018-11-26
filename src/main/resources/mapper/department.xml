@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zanyun.tms.mapper.DepartmentMapper">
+	
+	<select id="selectById" resultType="com.zanyun.tms.domain.background.Department" parameterType="java.lang.Integer">
+        select * from `department` where id= #{id}
+    </select>
+	
+	<resultMap id="DepartmentViewResult" type="com.zanyun.tms.view.background.DepartmentView">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="desc" column="desc"/>
+		<result property="dingChatId" column="dingChatId"/>
+		<result property="chatName" column="chatName"/>
+		<collection property="authIdList" javaType="ArrayList" ofType="java.lang.Integer">
+			<id property="authId" column="auth_id"/>
+		</collection>
+	</resultMap>
+	
+	<select id="selectViewById" resultMap="DepartmentViewResult" parameterType="java.lang.Integer">
+		select
+		d.id as id,
+		d.name as `name`,
+		d.desc as `desc`,
+		d.dingChatId as `dingChatId`,
+		d.chatName as `chatName`,
+		a.id as auth_id
+		from `department` d
+		left join departmentAuthMapping m on d.id = m.departmentId
+		left join auth a on m.authId = a.id
+		where d.id= #{id}
+	</select>
+	
+	<select id="select" resultType="com.zanyun.tms.domain.background.Department" parameterType="java.util.Map">
+		select * from `department`
+		<where>
+			<if test="name!=null">
+				and `name` = #{name}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectList" resultType="com.zanyun.tms.domain.background.Department" parameterType="java.util.Map">
+		select * from `department`
+		<where>
+			<if test="content!=null">
+				and `name` like CONCAT('%',#{content},'%')
+			</if>
+		</where>
+		<if test="startIndex != null and pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="selectListByAuth" resultType="com.zanyun.tms.domain.background.Department" parameterType="java.util.Map">
+		select d.*
+		from `department` d
+		inner join departmentAuthMapping m on d.id = m.departmentId
+		inner join auth a on a.id = m.authId
+		<where>
+			<if test="name!=null">
+				and a.`name` = #{name}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1) from `department`
+		<where>
+			<if test="content!=null">
+				and `name` like CONCAT('%',#{content},'%')
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert" parameterType="com.zanyun.tms.domain.background.Department" useGeneratedKeys="true" keyProperty="id">
+        insert into `department`
+        (
+        `name`,
+        `desc`,
+        `createBy`,
+        `updateBy`
+        )
+        values
+        (
+        #{name},
+        #{desc},
+        #{createBy},
+        #{createBy}
+        )
+    </insert>
+	
+	<update id="update" parameterType="com.zanyun.tms.domain.background.Department">
+        update `department` set
+    	`name` = #{name},
+    	`desc` = #{desc},
+    	`dingChatId` = #{dingChatId},
+    	`chatName` = #{chatName},
+    	`updateBy` = #{updateBy}
+        where `id` = #{id}
+    </update>
+
+</mapper>

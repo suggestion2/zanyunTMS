@@ -1,0 +1,30 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > <a href="/background#/index/advertisement/list">广告位管理</a> > 广告位列表</span></div>
+</section>
+<section class="content" ng-controller="advertisementMngCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header clearfix">
+                    <p style="color: #999;margin-bottom: 0;">注意：广告版位对应网站指定区域，请根据具体版位尺寸进行编辑上传</p>
+                </div>
+                <div class="box-body">
+                    <table ng-table="tableParams" class="table table-bordered table-condensed table-hover">
+                        <tr ng-repeat="item in $data"
+                            ng-style="{'test' : mouseoverStyle(item.id)}"
+                            ng-class="{'warning' : clickStyle(item.id)}"
+                            style="cursor: pointer" ng-mouseenter="getMouseoverId(item.id)" ng-mouseleave="getMouseoverId(0)">
+                            <td style="padding-left: 20px;" class="col-xs-2" data-title="'名称'">
+                                {{item.name}}
+                            </td>
+                            <td class="col-xs-2" data-title="'内容'" ng-bind="item.content === null ? '---' : (item.content.length > 20 ? item.content.substr(0,20) + '...' : item.content)"></td>
+                            <td class="col-xs-2" data-title="'跳转地址'" ng-bind="item.redirectUrl === null ? '---' : item.redirectUrl"></td>
+                            <td class="col-xs-2" data-title="'操作'"><a class="btn btn-primary btn-xs" href="javascript:;" ui-sref="index.updateAdvertisement({id : item.id})">编辑</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

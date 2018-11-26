@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zanyun.tms.mapper.ActionMapper">
+	
+	<select id="selectById" resultType="com.zanyun.tms.domain.background.Action" parameterType="java.lang.Integer">
+        select * from `action` where id= #{id}
+    </select>
+	
+	<select id="select" resultType="com.zanyun.tms.domain.background.Action" parameterType="java.util.Map">
+		select * from `action`
+		<where>
+			<if test="authId!=null">
+				and authId = #{authId}
+			</if>
+			<if test="name!=null">
+				and `name` = #{name}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectList" resultType="com.zanyun.tms.domain.background.Action" parameterType="java.util.Map">
+		select *
+		from `action` a
+		left join departmentAuthMapping m on m.authId = a.authId
+		<where>
+			m.departmentId = #{departmentId}
+		</where>
+	</select>
+
+</mapper>

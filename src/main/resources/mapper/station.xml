@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zanyun.tms.mapper.StationMapper">
+	
+	<select id="selectById" resultType="com.zanyun.tms.domain.front.Station" parameterType="java.lang.Integer">
+        select * from `station` where id= #{id}
+    </select>
+	
+	<select id="select" resultType="com.zanyun.tms.domain.front.Station" parameterType="java.util.Map">
+		select * from `station`
+		<where>
+			<if test="name!=null">
+				and `name` = #{name}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectList" resultType="com.zanyun.tms.domain.front.Station" parameterType="java.util.Map">
+		select * from `station`
+		<where>
+			<if test="province!=null">
+				and `province` = #{province}
+			</if>
+			<if test="content!=null">
+				and (
+				`name` like CONCAT('%',#{content},'%') OR
+				`province` like CONCAT('%',#{content},'%') OR
+				`city` like CONCAT('%',#{content},'%') OR
+				`county` like CONCAT('%',#{content},'%')
+				)
+			</if>
+			<if test="effect != null">
+				and status > 0
+			</if>
+		</where>
+		order by
+		<if test="county!=null">
+			field(`county`,#{county}) DESC ,
+		</if>
+		<if test="city!=null">
+			field(`city`,#{city}) DESC,
+		</if>
+		createTime DESC
+		<if test="startIndex != null and pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1) from `station`
+		<where>
+			<if test="content!=null">
+				and (
+				`name` like CONCAT('%',#{content},'%') OR
+				`province` like CONCAT('%',#{content},'%') OR
+				`city` like CONCAT('%',#{content},'%') OR
+				`county` like CONCAT('%',#{content},'%')
+				)
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert" parameterType="com.zanyun.tms.domain.front.Station" useGeneratedKeys="true" keyProperty="id">
+        insert into `station`
+        (
+        `name`,
+        `province`,
+        `city`,
+        `county`,
+        `address`,
+        `longitude`,
+        `latitude`,
+        `createBy`,
+        `updateBy`
+        )
+        values
+        (
+        #{name},
+        #{province},
+        #{city},
+        #{county},
+        #{address},
+        #{longitude},
+        #{latitude},
+        #{createBy},
+        #{createBy}
+        )
+    </insert>
+	
+	<update id="update" parameterType="com.zanyun.tms.domain.front.Station">
+		update `station` set
+		`name` = #{name},
+		`status` = #{status},
+		`updateBy` = #{updateBy}
+		where `id` = #{id}
+	</update>
+</mapper>

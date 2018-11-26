@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zanyun.tms.mapper.OrderMapper">
+	
+	<select id="selectById" resultType="com.zanyun.tms.domain.front.Order" parameterType="java.lang.Integer">
+        select * from `order` where id= #{id}
+    </select>
+	
+	<select id="select" resultType="com.zanyun.tms.domain.front.Order" parameterType="java.util.Map">
+		select * from `order`
+		<where>
+			<if test="driverId!=null">
+				and `driverId` = #{driverId}
+			</if>
+			<if test="unfinished!=null">
+				and `status` in (2,3,4)
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectList" resultType="com.zanyun.tms.domain.front.Order" parameterType="java.util.Map">
+		select * from `order`
+		<where>
+			<if test="content!=null">
+				and `number` like CONCAT ('%',#{content},'%')
+			</if>
+			<if test="beginTime!=null">
+				and `createtime` &gt; #{beginTime}
+				and `createtime` &lt; DATE_ADD(#{beginTime},INTERVAL 1 MONTH)
+			</if>
+		</where>
+		order by createTime DESC
+		<if test="startIndex != null and pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="selectUnpaidListView" resultType="com.zanyun.tms.view.front.OrderUnpaidListView"
+			parameterType="java.util.Map">
+		select * from `order`
+		<where>
+			<if test="driverId!=null">
+				and driverId = #{driverId}
+			</if>
+			<if test="ownerId!=null">
+				and ownerId = #{ownerId}
+			</if>
+			<if test="status!=null">
+				and status = #{status}
+			</if>
+		</where>
+		order by
+		<if test="county!=null">
+			FIELD(oriCounty,#{county}) DESC,
+		</if>
+		<if test="city!=null">
+			FIELD(oriCity,#{city}) DESC,
+		</if>
+		<if test="province!=null">
+			FIELD(oriProvince,#{province}) DESC,
+		</if>
+		createTime DESC
+		<if test="startIndex != null and pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="selectListView" resultType="com.zanyun.tms.view.front.OrderListView" parameterType="java.util.Map">
+		select * from `order`
+		<where>
+			<if test="driverId!=null">
+				and driverId = #{driverId}
+			</if>
+			<if test="ownerId!=null">
+				and ownerId = #{ownerId}
+			</if>
+			<if test="status!=null">
+				and status = #{status}
+			</if>
+			<if test="created!=null">
+				and status in (0,1,2)
+			</if>
+		</where>
+		order by createTime DESC
+		<if test="startIndex != null and pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="selectViewList" resultType="com.zanyun.tms.view.background.OrderViewForList" parameterType="java.util.Map">
+		select * from `order`
+		<where>
+			<if test="content!=null">
+				and (
+				`number` like CONCAT ('%',#{content},'%') OR
+				`ownerName` like CONCAT ('%',#{content},'%') OR
+				CONCAT(`oriProvince`,`oriCity`,`oriCounty`) like CONCAT ('%',#{content},'%') OR
+				CONCAT(`arrProvince`,`arrCity`,`arrCounty`) like CONCAT ('%',#{content},'%')
+				)
+			</if>
+			<if test="status!=null">
+				and status = #{status}
+			</if>
+			<if test="transDepartmentId!=null">
+				and transDepartmentId = #{transDepartmentId}
+			</if>
+			<if test="comDepartmentId!=null">
+				and comDepartmentId = #{comDepartmentId}
+			</if>
+		</where>
+		order by createTime DESC
+		<if test="startIndex != null and pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1) from `order`
+		<where>
+			<if test="driverId!=null">
+				and driverId = #{driverId}
+			</if>
+			<if test="ownerId!=null">
+				and ownerId = #{ownerId}
+			</if>
+			<if test="status!=null">
+				and status = #{status}
+			</if>
+			<if test="created!=null">
+				and status in (0,1,2)
+			</if>
+			<if test="content!=null">
+				and (
+				`number` like CONCAT ('%',#{content},'%') OR
+				`ownerName` like CONCAT ('%',#{content},'%') OR
+				CONCAT(`oriProvince`,`oriCity`,`oriCounty`) like CONCAT ('%',#{content},'%') OR
+				CONCAT(`arrProvince`,`arrCity`,`arrCounty`) like CONCAT ('%',#{content},'%')
+				)
+			</if>
+			<if test="transDepartmentId!=null">
+				and transDepartmentId = #{transDepartmentId}
+			</if>
+			<if test="comDepartmentId!=null">
+				and comDepartmentId = #{comDepartmentId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectStatusCount" resultType="com.zanyun.tms.view.front.OrderStatusCount" parameterType="java.util.Map">
+		select
+		count(case when `status` = #{cancel} then 1 end) as cancel
+		,count(case when `status` in (0,1,2) then 1 end) as created
+		,count(case when `status` = #{unpaid} then 1 end) as unpaid
+		,count(case when `status` = #{accept} then 1 end) as accept
+		,count(case when `status` = #{transport} then 1 end) as transport
+		,count(case when `status` = #{complete} then 1 end) as complete
+		,count(1) as `all`
+		from `zxtms`.`order`
+		<where>
+			<if test="driverId!=null">
+				and driverId = #{driverId}
+			</if>
+			<if test="ownerId!=null">
+				and ownerId = #{ownerId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectReportCount" resultType="com.zanyun.tms.domain.background.OrderCount" parameterType="java.util.Date">
+		select
+		count(case when to_days(paidTime) = to_days(#{date}) then 1 end) as paidCount
+		,count(case when to_days(transportTime) = to_days(#{date}) then 1 end) as transportCount
+		,count(case when to_days(completeTime) = to_days(#{date}) then 1 end) as completeCount
+		from `zxtms`.`order`
+	</select>
+	
+	<insert id="insert" parameterType="com.zanyun.tms.domain.front.Order" useGeneratedKeys="true" keyProperty="id">
+		insert into `order`
+		(
+		`number`,
+		`ownerId`,
+		`ownerType`,
+		`ownerPhone`,
+		`ownerName`,
+		`ownerIdCardNum`,
+		`companyName`,
+		`companyLicenseCode`,
+		`companyProvince`,
+		`companyCity`,
+		`companyCounty`,
+		`companyAddr`,
+		`loadTime`,
+		`loadContact`,
+		`loadPhone`,
+		`dischargeContact`,
+		`dischargePhone`,
+		`oriStationId`,
+		`oriStationName`,
+		`oriProvince`,
+		`oriCity`,
+		`oriCounty`,
+		`oriAddress`,
+		`oriLong`,
+		`oriLat`,
+		`arrStationId`,
+		`arrStationName`,
+		`arrProvince`,
+		`arrCity`,
+		`arrCounty`,
+		`arrAddress`,
+		`arrLong`,
+		`arrLat`,
+		`cargoType`,
+		`cargoDesc`,
+		`ton`,
+		`cube`,
+		`pieces`,
+		`cargoValue`,
+		`ownerFreight`,
+		`updateBy`,
+		`type`,
+		`landTime`,
+		`dischargeCompany`,
+		`remarks`,
+		`transportationModel`
+		)
+		values
+		(
+		#{number},
+		#{ownerId},
+		#{ownerType},
+		#{ownerPhone},
+		#{ownerName},
+		#{ownerIdCardNum},
+		#{companyName},
+		#{companyLicenseCode},
+		#{companyProvince},
+		#{companyCity},
+		#{companyCounty},
+		#{companyAddr},
+		#{loadTime},
+		#{loadContact},
+		#{loadPhone},
+		#{dischargeContact},
+		#{dischargePhone},
+		#{oriStationId},
+		#{oriStationName},
+		#{oriProvince},
+		#{oriCity},
+		#{oriCounty},
+		#{oriAddress},
+		#{oriLong},
+		#{oriLat},
+		#{arrStationId},
+		#{arrStationName},
+		#{arrProvince},
+		#{arrCity},
+		#{arrCounty},
+		#{arrAddress},
+		#{arrLong},
+		#{arrLat},
+		#{cargoType},
+		#{cargoDesc},
+		#{ton},
+		#{cube},
+		#{pieces},
+		#{cargoValue},
+		#{ownerFreight},
+		0,
+		#{type},
+		#{landTime},
+		#{dischargeCompany},
+		#{remarks},
+		#{transportationModel}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.zanyun.tms.domain.front.Order">
+		update `order` set
+		`driverId` = #{driverId},
+		`driverName` = #{driverName},
+		`driverPhone` = #{driverPhone},
+		`driverFreight` = #{driverFreight},
+		`driverPayType` = #{driverPayType},
+		`validateRemarks` = #{validateRemarks},
+		`finalFreight` = #{finalFreight},
+		`infoFee` = #{infoFee},
+		`updateTime` = now(),
+		`paidTime` = #{paidTime},
+		`transportTime` = #{transportTime},
+		`completeTime` = #{completeTime},
+		`updateBy` = #{updateBy},
+		`transDepartmentId` = #{transDepartmentId},
+		`comDepartmentId` = #{comDepartmentId},
+		`status` = #{status}
+		where `id` = #{id}
+	</update>
+	
+	<update id="updateUnpaidOrder">
+		update `order` set `status` = 1 where `status` = 2 and now() &gt; DATE_ADD(`updateTime`,INTERVAL 15 MINUTE)
+	</update>
+</mapper>

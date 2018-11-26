@@ -1,0 +1,72 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > <a href="/background#/index/department/list">部门管理</a> > 新增/编辑部门</span></div>
+</section>
+
+<section class="content" ng-controller="departmentFormCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-body" style="padding: 50px 0;">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label" style="width: 200px;">部门名称</label>
+                            <div class="col-sm-10" style="width: 500px;">
+                                <attention form-name="form" name="name" maxlength="20">
+                                    <input type="text" id="name" name="name" class="form-control" ng-model="department.name" ng-maxlength="maxlength" ng-required="true"/>
+                                </attention>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="desc" class="col-sm-2 control-label" style="width: 200px;">部门描述</label>
+
+                            <div class="col-sm-10" style="width: 500px;">
+                                <attention form-name="form" name="desc" maxlength="20">
+                                    <input type="text" id="desc" name="desc" class="form-control"
+                                           ng-model="department.desc" ng-maxlength="maxlength" ng-required="true"/>
+                                </attention>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="desc" class="col-sm-2 control-label" style="width: 200px;">钉钉群名称</label>
+                            <div class="col-sm-10" style="width: 500px;">
+                                <attention form-name="form" name="chatName" maxlength="20">
+                                    <input type="text" id="chatName" name="chatName" class="form-control"
+                                           ng-model="department.chatName" ng-maxlength="maxlength" ng-required="true"/>
+                                </attention>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" style="width: 200px;">设置权限</label>
+                            <div class="col-sm-10" style="max-width: 700px;padding-top: 7px;">
+                                <div class="tree2" ng-include="'recursion'">
+                                </div>
+                                <script id="recursion" type="text/ng-template">
+                                    <ul class="treeL">
+                                        <li class="treeC" ng-repeat="item in list| orderBy : 'displayOrder'" style="max-width: 500px;">
+                                            <p>
+                                                <i class="fa" ng-class="{'fa-minus-square-o':!item.showSubList && item.subList.length > 0,'fa-plus-square-o':item.showSubList}" ng-click="item.showSubList=!item.showSubList"></i>
+                                                <span ng-bind="item.desc"></span>
+                                                <label class="treeLabel">
+                                                    <i class="fa fa-square-o"
+                                                       ng-class="{'fa-check-square-o':checkId(item.id),'fa-square-o':!checkId(item.id)}"></i>
+                                                    <input type="checkbox" style="display: none"  ng-checked="checkId(item.id)" ng-click="chooseId(item);">
+                                                </label>
+                                            </p>
+                                            <div ng-hide="item.showSubList" ng-if="item.subList.length > 0" ng-include="'recursion'" ng-init="list=item.subList"></div>
+                                        </li>
+                                    </ul>
+                                </script>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 text-center" style="margin-top: 30px;width: 700px;">
+                            <button class="btn btn-primary" ng-click="confirm();" ng-disabled="form.$invalid"
+                                    style="margin-right: 10px;">保存
+                            </button>
+                            <button class="btn btn-default" ui-sref="index.departmentMng">返回列表</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

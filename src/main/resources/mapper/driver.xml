@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zanyun.tms.mapper.DriverMapper">
+	
+	<select id="selectById" resultType="com.zanyun.tms.domain.front.Driver" parameterType="java.lang.Integer">
+        select * from driver where id= #{id}
+    </select>
+	
+	<select id="select" resultType="com.zanyun.tms.domain.front.Driver" parameterType="java.util.Map">
+		select * from driver
+		<where>
+			<if test="phone!=null">
+				and phone = #{phone}
+			</if>
+			<if test="wechatPubOpenId!=null">
+				and wechatPubOpenId = #{wechatPubOpenId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectList" resultType="com.zanyun.tms.domain.front.Driver" parameterType="java.util.Map">
+		select * from driver
+		<where>
+			<if test="content!=null">
+				and phone like CONCAT('%',#{content},'%')
+			</if>
+		</where>
+		order by createTime DESC
+		<if test="startIndex != null and pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="selectViewList" resultType="com.zanyun.tms.view.background.DriverViewForList" parameterType="java.util.Map">
+		select * from driver
+		<where>
+			<if test="content!=null">
+				and (
+				`name` like CONCAT('%',#{content},'%') OR
+				`phone` like CONCAT('%',#{content},'%') OR
+				`taskAddress1` like concat('%',#{content},'%') OR
+				`taskAddress2` like concat('%',#{content},'%') OR
+				`taskAddress3` like concat('%',#{content},'%') OR
+				`taskAddress4` like concat('%',#{content},'%')
+				)
+			</if>
+			<if test="status!=null">
+				and status = #{status}
+			</if>
+		</where>
+		order by createTime DESC
+		<if test="startIndex != null and pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1) from `driver`
+		<where>
+			<if test="content!=null">
+				and (
+				`name` like CONCAT('%',#{content},'%') OR
+				`phone` like CONCAT('%',#{content},'%') OR
+				`taskAddress1` like concat('%',#{content},'%') OR
+				`taskAddress2` like concat('%',#{content},'%') OR
+				`taskAddress3` like concat('%',#{content},'%') OR
+				`taskAddress4` like concat('%',#{content},'%')
+				)
+			</if>
+			<if test="status!=null">
+				and status = #{status}
+			</if>
+			<if test="date!=null">
+				and to_days(createTime) = to_days(#{date})
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectTruckViewList" resultType="com.zanyun.tms.view.front.TruckView" parameterType="java.util.Map">
+		select id,`name`,drivingExp,model,province,city,county,dLicenseUrl,taskAddress1,taskAddress2,taskAddress3,taskAddress4 from driver
+		<where>
+			<if test="status!=null">
+				and status = #{status}
+			</if>
+		</where>
+		order by createTime DESC
+		<if test="startIndex != null and pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="selectTruckViewById" resultType="com.zanyun.tms.view.front.TruckView" parameterType="java.lang.Integer">
+		select id,`name`,drivingExp,model,province,city,county,dLicenseUrl,taskAddress1,taskAddress2,taskAddress3,taskAddress4 from driver
+		where id= #{id}
+	</select>
+	
+	<insert id="insert" parameterType="com.zanyun.tms.domain.front.Driver" useGeneratedKeys="true" keyProperty="id">
+        insert into driver
+        (
+        `phone`,
+        `password`,
+        `wechatPubOpenId`,
+        `wechatName`,
+        `wechatHeadImg`
+        )
+        values
+        (
+        #{phone},
+        #{password},
+        #{wechatPubOpenId},
+        #{wechatName},
+        #{wechatHeadImg}
+        )
+    </insert>
+	
+	<update id="update" parameterType="com.zanyun.tms.domain.front.Driver">
+        update driver set
+    	`name` = #{name},
+    	`password` = #{password},
+    	`wechatName` = #{wechatName},
+    	`province` = #{province},
+    	`city` = #{city},
+    	`county` = #{county},
+    	`address` = #{address},
+    	`portraitUrl` = #{portraitUrl},
+    	`gender` = #{gender},
+    	`licenseType` = #{licenseType},
+    	`licenseNum` = #{licenseNum},
+    	`drivingExp` = #{drivingExp},
+    	`licenseUrl` = #{licenseUrl},
+    	`licenseEffTime` = #{licenseEffTime},
+    	`licenseStartTime` = #{licenseStartTime},
+    	`expiredTime` = #{expiredTime},
+    	`updateTime` = now(),
+    	`updateBy` = #{updateBy},
+    	`wechatPubOpenId` = #{wechatPubOpenId},
+    	`dLicenseNum` = #{dLicenseNum},
+    	`engineNum` = #{engineNum},
+    	`dLicenseUrl` = #{dLicenseUrl},
+    	`wechatHeadImg` = #{wechatHeadImg},
+    	`model` = #{model},
+    	`taskProvince1` = #{taskProvince1},
+    	`taskCity1` = #{taskCity1},
+    	`taskCounty1` = #{taskCounty1},
+    	`taskProvince2` = #{taskProvince2},
+    	`taskCity2` = #{taskCity2},
+    	`taskCounty2` = #{taskCounty2},
+    	`taskAddress1` = #{taskAddress1},
+    	`taskAddress2` = #{taskAddress2},
+    	`taskProvince3` = #{taskProvince3},
+    	`taskCity3` = #{taskCity3},
+    	`taskCounty3` = #{taskCounty3},
+    	`taskProvince4` = #{taskProvince4},
+    	`taskCity4` = #{taskCity4},
+    	`taskCounty4` = #{taskCounty4},
+    	`taskAddress3` = #{taskAddress3},
+    	`taskAddress4` = #{taskAddress4},
+    	`licensePlate` = #{licensePlate},
+    	`status` = #{status}
+        where `id` = #{id}
+    </update>
+
+</mapper>

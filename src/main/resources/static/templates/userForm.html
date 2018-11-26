@@ -1,0 +1,50 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > <a href="/background#/index/user/list">员工管理</a> > 新增/编辑员工</span></div>
+</section>
+<section class="content" ng-controller="userFormCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-body" style="padding: 50px 0;">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label" style="width: 200px;">员工姓名</label>
+
+                            <div class="col-sm-10" style="width: 500px;">
+                                <attention form-name="form" name="name">
+                                    <input name="name" id="name" type="text"  class="form-control" ng-disabled="$stateParams.id" ng-model="user.name" ng-required="true" />
+                                </attention>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="col-sm-2 control-label" style="width: 200px;">手机号</label>
+
+                            <div class="col-sm-10" style="width: 500px;">
+                                <attention form-name="form" name="phone">
+                                    <input id="phone" name="phone" type="text" class="form-control" ng-disabled="$stateParams.id" ng-model="user.phone" ng-required="true" smart-pattern="phone"/>
+                                </attention>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" style="width: 200px;">选择部门</label>
+                            <ul class="col-sm-10 clearfix" style="width: 700px;margin-top: 7px;">
+                                <li ng-repeat="item in dList" class="col-xs-3">
+                                    <label>
+                                        <i class="fa" ng-class="{'fa-check-square-o':checkId(item.id)==true,'fa-square-o':checkId(item.id)==false}"></i>
+                                        <input type="checkbox" style="display: none" class="checkbox form-control" ng-click="choose(item.id)"/>
+                                    </label>
+                                    {{item.name}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-12 text-center" style="margin-top: 30px;width: 700px;">
+                            <button class="btn btn-primary" type="submit" ng-click="confirm();" ng-disabled="form.$invalid" style="margin-right: 10px;" >确定</button>
+                            <button class="btn btn-default" type="button" ui-sref="index.userMng" >返回列表</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zanyun.tms.mapper.UserMapper">
+	
+	<select id="selectById" resultType="com.zanyun.tms.domain.background.User" parameterType="java.lang.Integer">
+        select * from `user` where id= #{id}
+    </select>
+	
+	<select id="select" resultType="com.zanyun.tms.domain.background.User" parameterType="java.util.Map">
+		select * from `user`
+		<where>
+			<if test="phone!=null">
+				and phone = #{phone}
+			</if>
+			<if test="name!=null">
+				and `name` = #{name}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectList" resultType="com.zanyun.tms.domain.background.User" parameterType="java.util.Map">
+		select * from `user`
+		<where>
+			<if test="departmentId!=null">
+				and departmentId = #{departmentId}
+			</if>
+			<if test="status!=null">
+				and status = #{status}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectViewList" resultType="com.zanyun.tms.view.background.UserView" parameterType="java.util.Map">
+		select u.*,d.name as department
+		from `user` u
+		left join department d on u.departmentId = d.id
+		<where>
+			<if test="content!=null">
+				and (
+				`name` like CONCAT('%',#{content},'%') or
+				`phone` like CONCAT('%',#{content},'%')
+				)
+			</if>
+		</where>
+		order by departmentId DESC
+		<if test="startIndex != null and pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1) from `user`
+		<where>
+			<if test="content!=null">
+				and (
+				`name` like CONCAT('%',#{content},'%') or
+				`phone` like CONCAT('%',#{content},'%')
+				)
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert" parameterType="com.zanyun.tms.domain.background.User" useGeneratedKeys="true" keyProperty="id">
+        insert into `user`
+        (
+        `phone`,
+        `password`,
+        `name`,
+        `departmentId`
+        )
+        values
+        (
+        #{phone},
+        #{password},
+        #{name},
+        #{departmentId}
+        )
+    </insert>
+	
+	<update id="update" parameterType="com.zanyun.tms.domain.background.User">
+        update `user` set
+    	`name` = #{name},
+    	`password` = #{password},
+    	`phone` = #{phone},
+    	`departmentId` = #{departmentId},
+    	`dingUserId` = #{dingUserId},
+    	`status` = #{status}
+        where `id` = #{id}
+    </update>
+
+</mapper>

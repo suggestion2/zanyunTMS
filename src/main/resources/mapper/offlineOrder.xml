@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zanyun.tms.mapper.OfflineOrderMapper">
+	
+	<select id="selectById" resultType="com.zanyun.tms.domain.background.OfflineOrder" parameterType="java.lang.Integer">
+        select * from `offline_order` where id= #{id}
+    </select>
+	
+	<select id="select" resultType="com.zanyun.tms.domain.background.OfflineOrder" parameterType="java.util.Map">
+		select * from `offline_order`
+		<where>
+			<if test="id!=null">
+				and `id` = #{id}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectList" resultType="com.zanyun.tms.domain.background.OfflineOrder" parameterType="java.util.Map">
+		select * from `offline_order`
+		<where>
+			<if test="content!=null">
+				and `number` like CONCAT ('%',#{content},'%')
+			</if>
+		</where>
+		order by createTime desc
+		<if test="startIndex != null and pageSize != null">
+			limit #{startIndex},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1) from `offline_order`
+		<where>
+			<if test="id!=null">
+				and id = #{id}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert" parameterType="com.zanyun.tms.domain.background.OfflineOrder" useGeneratedKeys="true" keyProperty="id">
+		insert into `offline_order`
+		(
+		`number`,
+		`ownerType`,
+		`ownerPhone`,
+		`ownerName`,
+		`driverName`,
+		`driverPhone`,
+		`loadTime`,
+		`loadContact`,
+		`loadPhone`,
+		`dischargeContact`,
+		`dischargePhone`,
+		`oriProvince`,
+		`oriCity`,
+		`oriCounty`,
+		`oriAddress`,
+		`arrProvince`,
+		`arrCity`,
+		`arrCounty`,
+		`arrAddress`,
+		`cargoType`,
+		`cargoDesc`,
+		`ton`,
+		`cube`,
+		`pieces`,
+		`cargoValue`,
+		`ownerFreight`,
+		`driverFreight`,
+		`driverPayType`,
+		`updateBy`,
+		`remarks`,
+		`ownerIdCardNum`,
+		`companyName`,
+		`companyLicenseCode`,
+		`companyProvince`,
+		`companyCity`,
+		`companyCounty`,
+		`companyAddr`,
+		`transportTime`,
+		`completeTime`,
+		`finalFreight`,
+		`landTime`
+		)
+		values
+		(
+		#{number},
+		#{ownerType},
+		#{ownerPhone},
+		#{ownerName},
+		#{driverName},
+		#{driverPhone},
+		#{loadTime},
+		#{loadContact},
+		#{loadPhone},
+		#{dischargeContact},
+		#{dischargePhone},
+		#{oriProvince},
+		#{oriCity},
+		#{oriCounty},
+		#{oriAddress},
+		#{arrProvince},
+		#{arrCity},
+		#{arrCounty},
+		#{arrAddress},
+		#{cargoType},
+		#{cargoDesc},
+		#{ton},
+		#{cube},
+		#{pieces},
+		#{cargoValue},
+		#{ownerFreight},
+		#{driverFreight},
+		#{driverPayType},
+		#{updateBy},
+		#{remarks},
+		#{ownerIdCardNum},
+		#{companyName},
+		#{companyLicenseCode},
+		#{companyProvince},
+		#{companyCity},
+		#{companyCounty},
+		#{companyAddr},
+		#{transportTime},
+		#{completeTime},
+		#{finalFreight},
+		#{landTime}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.zanyun.tms.domain.background.OfflineOrder">
+		update `offline_order` set
+		`number` = #{number},
+		`ownerType` = #{ownerType},
+		`ownerPhone` = #{ownerPhone},
+		`ownerName` = #{ownerName},
+		`driverName` = #{driverName},
+		`driverPhone` = #{driverPhone},
+		`loadTime` = #{loadTime},
+		`loadContact` = #{loadContact},
+		`loadPhone` = #{loadPhone},
+		`dischargeContact` = #{dischargeContact},
+		`dischargePhone` = #{dischargePhone},
+		`oriProvince` = #{oriProvince},
+		`oriCity` = #{oriCity},
+		`oriCounty` = #{oriCounty},
+		`oriAddress` = #{oriAddress},
+		`arrProvince` = #{arrProvince},
+		`arrCity` = #{arrCity},
+		`arrCounty` = #{arrCounty},
+		`arrAddress` = #{arrAddress},
+		`cargoType` = #{cargoType},
+		`cargoDesc` = #{cargoDesc},
+		`ton` = #{ton},
+		`cube` = #{cube},
+		`pieces` = #{pieces},
+		`cargoValue` = #{cargoValue},
+		`ownerFreight` = #{ownerFreight},
+		`driverFreight` = #{driverFreight},
+		`driverPayType` = #{driverPayType},
+		`updateTime` = now(),
+		`updateBy` = #{updateBy},
+		`status` = #{status},
+		`remarks` = #{remarks},
+		`ownerIdCardNum` = #{ownerIdCardNum},
+		`companyName` = #{companyName},
+		`companyLicenseCode` = #{companyLicenseCode},
+		`companyProvince` = #{companyProvince},
+		`companyCity` = #{companyCity},
+		`companyCounty` = #{companyCounty},
+		`companyAddr` = #{companyAddr},
+		`transportTime` = #{transportTime},
+		`completeTime` = #{completeTime},
+		`finalFreight` = #{finalFreight},
+		`landTime` = #{landTime}
+		where `id` = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		update `offline_order` set `status` = -1 where id = #{id}
+	</delete>
+</mapper>

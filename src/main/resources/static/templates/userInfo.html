@@ -1,0 +1,79 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > 用户信息</span></div>
+</section>
+<section class="content" ng-controller="userInfoCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-body" style="padding-top: 50px;padding-bottom: 50px;">
+                    <table class="table table-condensed table-hover">
+                        <tbody>
+                        <tr>
+                            <td style="padding-left: 20px;position: relative; color: #999;" width="200">用户名</td>
+                            <td ng-bind="user.name"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 20px;position: relative; color: #999;">密码</td>
+                            <td><a style="cursor: pointer" data-target="#changePasswordModal"
+                                   data-toggle="modal">修改密码</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog"  aria-labelledby="changePasswordModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content clearfix">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" style="font-weight: normal;">
+                        修改密码
+                    </h4>
+                </div>
+
+                <form role="form" name="form1">
+                    <div class="modal-body">
+                        <div class="row" style="margin-top: 10px">
+                            <label class="col-xs-2 col-sm-2 col-xs-offset-2 col-sm-offset-2" style="margin-top:6px;">手机号:</label>
+                            <div class="col-xs-6 col-sm-6">
+                                <attention form-name="form1" name="phone">
+                                    <input type="text" class="form-control" name="phone" ng-required="true" smart-pattern="phone"
+                                           ng-model="forget.phone" placeholder="请输入手机号"/>
+                                </attention>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <label class="col-xs-2 col-sm-2 col-xs-offset-2 col-sm-offset-2" style="margin-top:6px;">验证码:</label>
+                            <div class="col-xs-6 col-sm-6">
+                                <attention form-name="form1" name="captcha">
+                                    <input type="text" class="form-control" name="captcha" ng-required="true"
+                                           ng-model="forget.captcha" placeholder="请输入验证码"/>
+                                </attention>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <label class="col-xs-2 col-sm-2 col-xs-offset-2 col-sm-offset-2" style="margin-top:6px;">密码:</label>
+                            <div class="col-xs-6 col-sm-6">
+                                <attention form-name="form1" name="password">
+                                    <input type="password" class="form-control" name="password" ng-required="true"
+                                           ng-model="forget.password" placeholder="请输入密码"/>
+                                </attention>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer" style="text-align: center;">
+                        <button type="button" class="btn btn-primary" ng-click="sendCaptcha();" ng-disabled="form1.phone.$invalid">发送验证码</button>
+                        <button type="button" class="btn btn-primary" ng-click="forgetPwd();" ng-disabled="form1.$invalid">修改密码</button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</section>

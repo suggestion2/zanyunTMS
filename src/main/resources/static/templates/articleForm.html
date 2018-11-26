@@ -1,0 +1,86 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > <a href="/background#/index/article/list">文章管理</a> > 新增/编辑文章</span></div>
+</section>
+<section class="content" ng-controller="articleFormCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-body" style="padding-top: 50px;padding-bottom: 50px;">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="title" class="col-sm-2 control-label" style="width: 200px;">文章标题</label>
+
+                            <div class="col-sm-8" style="width: 500px;">
+                                <attention form-name="form" name="title">
+                                    <input name="title" id="title" type="text" class="form-control"
+                                           ng-model="article.title" ng-required="true"/>
+                                </attention>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="summary" class="col-sm-2 control-label" style="width: 200px;">文章摘要</label>
+
+                            <div class="col-sm-8" style="width: 500px;">
+                                <attention form-name="form" name="summary">
+                                    <input name="summary" id="summary" type="text" class="form-control"
+                                           ng-model="article.summary" ng-required="true"/>
+                                </attention>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" style="width: 200px;">文章状态</label>
+                            <label class="control-label col-xs-10" style="width: 500px;text-align: left;">
+                                <i class="fa"
+                                   ng-class="{'fa-check-square-o':article.status === 1,'fa-square-o':article.status === 0}"></i>
+                                <input type="checkbox" class="checkbox form-control hide"
+                                       ng-click="change()"/>
+                                <span style="font-weight: normal"> 生效</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" style="width: 200px;">文章类型</label>
+                            <div class="col-sm-10" style="width: 500px;margin-top: 7px;">
+                                <input type="radio" name="sex" ng-value="1" ng-model="article.type" /> 公司新闻
+                                <input type="radio" name="sex" ng-value="2" ng-model="article.type" style="margin-left: 10px;" /> 行业新闻
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" style="width: 200px;">封面图</label>
+                            <div class="col-sm-8" style="width: 500px;margin-top: 10px;">
+                                <img ng-src="{{article.coverImageUrl === undefined ? 'images/admin/logo_ico.png' : article.coverImageUrl}}" style="max-width: 500px;">
+                                <div nv-file-drop="" uploader="uploader1"
+                                     style="padding-top: 20px; padding-bottom: 20px;   ">
+                                    <div>
+                                        <div class="well my-drop-zone" nv-file-over="" uploader="uploader1"
+                                             style="height: 150px;text-align: center;">
+                                            <p style="padding-top: 40px;">拖动图片到此处以完成上传</p>
+                                        </div>
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar"
+                                                 ng-style="{ 'width': uploader1.queue[0].progress + '%' }"></div>
+                                        </div>
+                                    </div>
+                                    <div ng-repeat="item in uploader1.queue">
+                                        <div ng-thumb="{ file: item._file,width:180}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" style="width: 200px;">文章内容</label>
+                            <div class="col-sm-8" style="width: 730px;margin-top: 10px;">
+                                <text-angular ng-model="article.content"></text-angular>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 text-center" style="margin-top: 30px;">
+                            <button class="btn btn-primary" type="submit" ng-click="confirm();"
+                                    ng-disabled="form.$invalid" style="margin-right: 10px;">确定
+                            </button>
+                            <button class="btn btn-default" type="button" ui-sref="index.articleMng">返回列表</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

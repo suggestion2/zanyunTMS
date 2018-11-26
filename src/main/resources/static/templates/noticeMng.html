@@ -1,0 +1,38 @@
+<section class="content-header">
+    <div style="border-left: 2px solid #3c8dbc;padding-left: 15px;">当前位置：<span><a href="/background#/index">首页</a> > <a href="/background#/index/notice/list">公告管理</a> > 公告列表</span></div>
+</section>
+<section class="content" ng-controller="noticeMngCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header clearfix box-search">
+                    <button type="button" class="btn btn-primary pull-left" ui-sref="index.insertNotice"><i class="fa fa-plus"></i> 新增公告</button>
+                    <form class="form-horizontal pull-right" role="form">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="请输入标题" ng-model="tableParams.filter().content">
+                                <span class="input-group-addon" ng-click="tableReload()"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="box-body">
+                    <table ng-table="tableParams" class="table table-bordered table-condensed table-hover">
+                        <tr ng-repeat="item in $data"
+                            ng-style="{'test' : mouseoverStyle(item.id)}"
+                            ng-class="{'warning' : clickStyle(item.id)}"
+                            style="cursor: pointer" ng-mouseenter="getMouseoverId(item.id)" ng-mouseleave="getMouseoverId(0)">
+                            <td style="padding-left: 20px;" class="col-xs-2" data-title="'标题'" ng-bind="item.title.length > 20? item.title.substring(0,20) + '...' : item.title"></td>
+                            <td class="col-xs-2" data-title="'创建时间'" ng-bind="item.createTime"></td>
+                            <td class="col-xs-2" data-title="'状态'" ng-bind="item.status == 0?'失效':'生效'"></td>
+                            <td class="col-xs-2" data-title="'操作'" >
+                                <a class="btn btn-primary btn-xs" href="javascript:;" ui-sref="index.updateNotice({id : item.id})">编辑</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

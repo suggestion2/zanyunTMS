@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zanyun.tms.mapper.CustomerCountMapper">
+	
+	<select id="select" resultType="com.zanyun.tms.domain.background.CustomerCount" parameterType="java.lang.Integer">
+        select * from `customer_count`
+        where to_days(createTime) = to_days(#{date})
+    </select>
+	
+	<select id="selectList" resultType="com.zanyun.tms.domain.background.CustomerCount" parameterType="java.util.Map">
+		select * from `customer_count`
+		where DATE_SUB(CURDATE(), INTERVAL #{days} DAY) &lt;= createTime
+	</select>
+	
+	<insert id="insert" parameterType="com.zanyun.tms.domain.background.CustomerCount" useGeneratedKeys="true" keyProperty="id">
+		insert into `customer_count`
+		(
+		`driverCount`,
+		`ownerCount`,
+		`createTime`
+		)
+		values
+		(
+		#{driverCount},
+		#{ownerCount},
+		#{createTime}
+		)
+	</insert>
+
+</mapper>

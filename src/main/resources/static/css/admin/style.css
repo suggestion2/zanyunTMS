@@ -1,0 +1,77 @@
+ul,li{list-style: none;margin: 0;padding: 0}
+html,body{min-width: 1200px;overflow: auto;}
+label{min-width:14px;}
+.sidebar-menu > li > a{padding:12px 5px 12px 25px;}
+.sidebar-menu > li > a > .fa, .sidebar-menu > li > a > .glyphicon, .sidebar-menu > li > a > .ion{width: 30px;}
+.fixed .wrapper{overflow: auto;min-width:1200px;}
+.login-box, .register-box{margin: 0;}
+.skin-blue .main-header .navbar{background: #293846;}
+.skin-blue .main-header .logo{background: #293846;}
+.main-header .navbar{min-height: 60px;}
+.main-header .logo{min-height: 60px;line-height: 60px;}
+.main-header .sidebar-toggle{padding: 20px;}
+.skin-blue .main-sidebar, .skin-blue .left-side{background-color: #2f4050;}
+.skin-blue .sidebar-menu > li > .treeview-menu{background: #293846;}
+.validatebox{position: relative;}
+.validatebox .vresult{position: absolute; right: 8px; top: 50%; margin-top: -10px;}
+.validatebox .vresult .help-block{margin: 0;}
+.box-search .form-group{width: 250px; margin-left: 0; margin-right: 0; margin-bottom: 0;}
+.box-search .input-group .input-group-addon{background: #3c8dbc; color: #fff; border: #3c8dbc;cursor: pointer}
+.box{border-top:0;}
+.box-header{padding:20px 30px;border-bottom: 1px solid #f4f4f4;}
+.box-body{padding:20px 30px;}
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td{border: 1px solid #f4f4f4;}
+.table>thead{background: #f4f4f4;color: #333;}
+.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th{padding: 10px;vertical-align: middle;}
+.table-hover>tbody>tr:hover{background: #f9f9f9;}
+.main-sidebar{padding-top: 60px;}
+.fixed .content-wrapper, .fixed .right-side{padding-top: 60px;}
+.treeview-menu > li > a{padding: 8px 5px 8px 52px;}
+.main-sidebar{width: 180px;}
+.content-wrapper, .main-footer{margin-left: 180px;}
+.content{padding:25px;padding-left: 25px;padding-right: 25px;}
+.content-header{padding:25px 25px 0;}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{border: 1px solid #eee;background: #f8f8f8;}
+/*树形结构*/
+li.treeC p:hover{ background-color:#eff0f4;}
+.tree2{padding-left: 10px;}
+.tree2 ul{margin: 0;}
+.treeL{padding-left:14px;}
+.treeC{line-height:30px; position:relative;}
+.treeC p{padding-left: 4px; padding-right: 4px; border-radius: 4px; margin: 0;}
+.treeC:before{display: inline-block; content:""; position:absolute; width:1px;z-index:1; border-left:1px dotted #666; top:1px; bottom:0;left:-20px;}
+.tree2 > .treeL > .treeC:first-child:before{display: inline-block; content:""; position:absolute; width:1px;z-index:1; border-left:1px dotted #666; top:15px; bottom:0;left:-20px;}
+.treeL > .treeC:last-child:before{display: inline-block; content:""; position:absolute; width:1px; height:13px;z-index:1; border-left:1px dotted #666; top:1px;left:-20px;}
+.treeC:after{display: inline-block; content:""; position:absolute; width:19px;z-index:1; border-top:1px dotted #666; top:15px;left:-20px;}
+.treeC .fa{font-size: 17px; color: #999; margin-right: 2px; cursor: pointer;}
+.treeL .treeC .treeLabel{position: absolute; right: 0}
+.treeL .treeC .fa-square-o{margin-right: 4px}
+#getAccTip .modal-header{border-bottom-color: #f4f4f4;}
+#getAccTip .modal-footer{border-top-color: #f4f4f4;}
+.reset-panel .sendVerCodeBtn{background: #3c8dbc;color: #fff;border-color: #3c8dbc;cursor: pointer}
+.modal-title{font-size: 16px;color: #337ab7;}
+.modal-body{padding:20px 15px;}
+a.btn{margin: 3px;}
+.navbar-nav>li>a{padding-top: 20px;padding-bottom: 20px;}
+.navbar-nav > .user-menu > .ydc-topnav{box-shadow: 0 0 2px rgba(0,0,0,.1);width: 160px;border-radius: 0;}
+.ydc-topnav li>a{display: block;padding:15px;text-align: center;}
+.ydc-topnav li>a:hover{background: #f9f9f9;}
+.navbar-custom-menu > .navbar-nav > li > .ydc-topnav{right:20px;}
+
+.fastBtn{padding:0 30px;}
+.fastBtn li{padding: 10px;width: 140px;float: left; border-radius: 4px;overflow: hidden;opacity: .9;margin: 20px;}
+.fastBtn li:hover{background: #f8f8f8;}
+.fastBtn a{display: block;width: 120px;color: #666;}
+.fastBtn a:hover{color: #333;}
+.fastBtn span{display: block;width: 120px;height: 120px;background: #eee;text-align: center;border-radius: 3px;}
+.fastBtn span i{font-size: 60px;color: #fff;line-height:120px;}
+.fastBtn p{text-align: center;margin-top: 10px;}
+
+
+@media (max-width: 767px) {
+    .main-sidebar {transform: none;}
+    .main-header .logo {width: 100%;float: left;}
+    .main-header .navbar{min-width: 1010px;float: none}
+}
+/*不是pc端登陆提示*/
+
